@@ -1,0 +1,76 @@
+
+<div class="w-full h-full bg-pattern" fxLayout="column" fxLayoutAlign="center center">
+    <div @fadeInUp class="card overflow-hidden w-full max-w-xs">
+      <div class="p-6 pb-0" fxLayout="column" fxLayoutAlign="center center">
+        <!-- <div class="fill-current text-center">
+          <img class="w-16" src="assets/img/demo/logo.svg">
+        </div> -->
+      </div>
+  
+      <div class="text-center mt-4">
+        <h1>CEAC</h1>
+        <h4 class="body-2 text-secondary m-0">Inicie sesión con sus credenciales.</h4>
+      </div>
+  
+      <!-- <div [formGroup]="form" class="p-6" fxLayout="column" fxLayoutGap="16px">
+
+        <div fxFlex="auto" fxLayout="column">
+          <mat-form-field fxFlex="grow">
+            <mat-label>Correo</mat-label>
+            <input formControlName="email" matInput required>
+            <mat-error *ngIf="form.get('email').hasError('required')">We need an email address to log you in</mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="grow">
+            <mat-label>Contraseña</mat-label>
+            <input [type]="inputType" formControlName="password" matInput required>
+            <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility" type="button">
+              <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+              <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('password').hasError('required')">We need a password to log you in</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <a [routerLink]="['/forgot-password']" class="caption">Recuperar contraseña?</a>
+        </div>
+  
+        <button (click)="send()" color="primary" mat-raised-button type="button">
+         INICIAR
+        </button>
+      </div> -->
+      <form #form="ngForm" (ngSubmit)="enviarFormulario(form)" autocomplete="off" class="p-6" fxLayout="column" >
+        <!-- <h3>{{jsonProduct}}</h3> -->
+        <div fxFlex="auto" fxLayout="column">
+            <mat-form-field appearance="outline" fxFlex="grow">
+            <mat-label>Usuario</mat-label>
+            <input type="mail" name="Correo electrónico" [(ngModel)]="usuarioSesion.usuario" #usuario="ngModel" matInput required>
+            <mat-error *ngIf="(formularioEnviado || usuario.dirty) && usuario.invalid">
+              <p class="error" *ngFor="let error of error.obtenerMensajesDeValidacion(usuario)"> {{error}}</p>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="grow">
+            <mat-label>Contraseña</mat-label>
+            <input [type]="inputType" name="Contraseña" [(ngModel)]="usuarioSesion.password" #password="ngModel" matInput required>
+            <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility" type="button">
+              <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+              <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+            </button>
+            <mat-error *ngIf="(formularioEnviado || password.dirty) && password.invalid">
+              <p class="error" *ngFor="let error of error.obtenerMensajesDeValidacion(password)"> {{error}}</p>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" style="align-self: flex-end; margin-top: 15px; margin-bottom: 15px;">
+          <!-- <mat-checkbox class="caption" color="primary">Remember Me</mat-checkbox> -->
+          <a [routerLink]="['/restablecer-contrasena']" class="caption">Recuperar contraseña</a>
+        </div>
+  
+        <button [class.btn-secondary]="formularioEnviado && form.invalid" [disabled]="formularioEnviado && form.invalid" type="submit" color="primary" mat-raised-button>
+         INICIAR
+        </button>
+      </form>
+    </div>
+  </div>
+  

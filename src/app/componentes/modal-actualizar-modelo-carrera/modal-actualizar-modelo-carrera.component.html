@@ -1,0 +1,149 @@
+<form novalidate #form="ngForm" (ngSubmit)="SubirArchivos()" autocomplete="off" ENCTYPE="multipart/form-data">
+  <!-- <form  autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)"> -->
+  <h2 mat-dialog-title>{{accion}} modelo carrera
+    <button mat-icon-button mat-dialog-close (click)="cerrarModal()" *ngIf="accion !== 'Eliminar';"
+      style="float: right;">
+      <!-- <mat-icon aria-label="Cerrar modal">close</mat-icon> -->
+      <mat-icon aria-label="Cerrar modal" [icIcon]="icClose"></mat-icon>
+    </button>
+  </h2>
+  <!-- <div>{{getmostrar}}</div> -->
+  <mat-dialog-content class="mat-typography">
+    <div *ngIf="accion !== 'Eliminar';  else elseTemplate">
+      <mat-tab-group>
+        <mat-tab label="Evaluación carrera"><br>
+          <div class="example-form">
+            <table class="example-full-width">
+              <tr>
+                <td>
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Periodo Lectivo</mat-label>
+                    <mat-select required name="id_periodo" #id_periodo="ngModel" [(ngModel)]="dataModelo.id_periodo">
+                      <mat-option disabled *ngIf="periodoRepo?.obtenerPeriodosActivos?.length === 0"
+                        value="{nombre:'noVale'}">
+                        Seleccionar:
+                      </mat-option>
+                      <mat-option *ngFor="let item of periodoRepo.obtenerPeriodosActivos" [value]="item.id_periodo">
+                        {{item.periodo}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <table class="example-full-width">
+              <tr>
+                <td>
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Criterio</mat-label>
+                    <mat-select required name="id_criterio" #id_criterio="ngModel" [(ngModel)]="dataModelo.id_criterio"
+                      (selectionChange)="seleccionarCriterio($event)">
+                      <mat-option disabled *ngIf="criterioRepo?.obtenerCriteriosActivos?.length === 0"
+                        value="{nombre:'noVale'}">
+                        Seleccionar:
+                      </mat-option>
+                      <mat-option *ngFor="let item of criterioRepo.obtenerCriteriosActivos" [value]="item.id_criterio">
+                        {{item.criterio}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Sub Criterio</mat-label>
+                    <mat-select required name="id_subcriterio" #id_subcriterio="ngModel"
+                      [(ngModel)]="dataModelo.id_subcriterio">
+                      <mat-option disabled *ngIf="subcriterioRepo?.obtenerSubcriterios?.length === 0"
+                        value="{nombre:'noVale'}">
+                        Seleccionar:
+                      </mat-option>
+                      <mat-option *ngFor="let item of subcriterioRepo.obtenerSubcriterios"
+                        [value]="item.id_subcriterio">
+                        {{item.subcriterio}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <table class="example-full-width">
+              <tr>
+                <td>
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Indicador</mat-label>
+                    <mat-select required name="id_indicador" #id_indicador="ngModel"
+                      [(ngModel)]="dataModelo.id_indicador">
+                      <mat-option disabled *ngIf="indicadorRepo?.obtenerIndicadoresActivos?.length === 0"
+                        value="{nombre:'noVale'}">
+                        Seleccionar:
+                      </mat-option>
+                      <mat-option *ngFor="let item of indicadorRepo.obtenerIndicadoresActivos"
+                        [value]="item.id_indicador">
+                        {{item.indicador}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Elemento fundamental</mat-label>
+                    <textarea rows="6" cols="120" matInput cdkFocusInitial #input name="elemento_fundamental"
+                      type="text" [(ngModel)]="dataModelo.elemento_fundamental" #elemento_fundamental="ngModel" required
+                      placeholder="Descripción del elemento fundamental"></textarea>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <mat-slide-toggle align="end" name="estado" [checked]="isChecked"
+                (change)="dataModelo.estado = $event.checked">Estado
+              </mat-slide-toggle>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Evidencias"><br>
+          <div class="example-form">
+            <div class="contenedor-agregar-archivo" (click)="clickAgregarArchivo()" style="cursor:pointer;">
+              <div class="agregar-archivo-caja">
+                <input style="display: none;" type="file" name="agregar-archivo" (change)="cargarArchivos($event)" 
+                  id="archivoAgregar" class="agregar-archivo" multiple #inputFile>
+                Añadir archivos
+                <mat-icon [icIcon]="icAdd"></mat-icon>
+              </div>
+            </div>
+            <div>
+              <mat-list role="list">
+                <mat-list-item *ngFor="let archivo of archivosTodos">
+                  <mat-icon mat-list-icon [icIcon]="icDelete" (click)="clickQuitarArchivo(archivo?.name)" style="cursor:pointer;"></mat-icon>
+                  <div mat-line>{{archivo?.name || archivo?.nombre}}</div>
+                  <!-- <div mat-line> {{note.updated | date}} </div> -->
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+    </div>
+    <ng-template #elseTemplate>
+      <div style="margin-bottom: 10px;">
+        ¿Deseas eliminar el registro?. <br>Si lo haces ya no podrás recuperarlo.
+      </div>
+    </ng-template>
+
+  </mat-dialog-content>
+  <!-- <div class="creado_modificado" *ngIf="accion === 'Modificar';">
+      <mat-label><b>Creado:</b> {{cargo.creado}}</mat-label><br>
+      <mat-label><b>Modificado:</b> {{cargo.modificado}}</mat-label>
+    </div> -->
+  <mat-dialog-actions *ngIf="accion !== 'Visualizar';" align="end">
+    <button mat-button mat-dialog-close (click)="cerrarModal()">Cancelar</button>
+    <button mat-button color="accent" cdkFocusInitial type="submit"
+      [class.btn-secondary]="formularioEnviado && form.invalid"
+      [disabled]="(formularioEnviado && form.invalid) || bloquearBoton">{{accion}}</button>
+  </mat-dialog-actions>
+  <mat-dialog-actions align="end" *ngIf="accion === 'Visualizar'">
+    <button mat-button mat-dialog-close (click)="cerrarModal()">Cancelar</button>
+    <button mat-button color="accent" cdkFocusInitial type="submit">Imprimir</button>
+  </mat-dialog-actions>
+</form>

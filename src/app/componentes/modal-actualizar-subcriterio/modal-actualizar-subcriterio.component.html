@@ -1,0 +1,48 @@
+<form class="example-form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)">
+  <h2 mat-dialog-title>{{accion}} Subcriterio </h2>
+  <!-- <button mat-icon-button mat-dialog-close (click)="cerrarModal()" *ngIf="accion !== 'Eliminar';">
+        <mat-icon aria-label="Cerrar modal" [icIcon]="icClose"></mat-icon>
+      </button> -->
+  <mat-dialog-content class="mat-typography">
+    <!-- <div>
+        {{getmostrar}}
+      </div> -->
+    <div *ngIf="accion !== 'Eliminar';  else elseTemplate">
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Subcriterio</mat-label>
+        <input matInput cdkFocusInitial #input name="Criterio" type="text" [(ngModel)]="dataSubcriterio.subcriterio"
+          #subcriterio="ngModel" required placeholder="Nombre del criterio">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Criterio</mat-label>
+        <mat-select required name="id_criterio" #id_criterio="ngModel" [(ngModel)]="dataSubcriterio.id_criterio">
+          <mat-option disabled *ngIf="criterioRepo?.obtenerCriterios?.length === 0" value="{nombre:'noVale'}">
+            Seleccionar:
+          </mat-option>
+          <mat-option *ngFor="let item of criterioRepo.obtenerCriterios" [value]="item.id_criterio">
+            {{item.criterio}}
+          </mat-option>
+
+        </mat-select>
+      </mat-form-field>
+      <mat-slide-toggle align="end" name="estado" [checked]="isChecked"
+      (change)="dataSubcriterio.estado = $event.checked">Estado
+      </mat-slide-toggle>
+    </div>
+    <ng-template #elseTemplate>
+      <div style="margin-bottom: 10px;">
+        ¿Deseas eliminar el registro <b>{{dataSubcriterio.subcriterio}}</b>?. <br>Si lo haces ya no podrás recuperarlo.
+      </div>
+    </ng-template>
+  </mat-dialog-content>
+  <!-- <div class="creado_modificado" *ngIf="accion === 'Modificar';">
+      <mat-label><b>Creado:</b> {{cargo.creado}}</mat-label><br>
+      <mat-label><b>Modificado:</b> {{cargo.modificado}}</mat-label>
+    </div> -->
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="cerrarModal()">Cancelar</button>
+    <button mat-button color="accent" cdkFocusInitial type="submit"
+      [class.btn-secondary]="formularioEnviado && form.invalid"
+      [disabled]="(formularioEnviado && form.invalid) || bloquearBoton">{{accion}}</button>
+  </mat-dialog-actions>
+</form>
