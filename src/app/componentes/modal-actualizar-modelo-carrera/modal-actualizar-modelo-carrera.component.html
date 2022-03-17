@@ -114,7 +114,7 @@
             <div>
               <mat-list role="list">
                 <mat-list-item *ngFor="let archivo of archivosTodos">
-                  <mat-icon mat-list-icon [icIcon]="icDelete" (click)="clickQuitarArchivo(archivo?.name)" style="cursor:pointer;"></mat-icon>
+                  <mat-icon mat-list-icon [icIcon]="icDelete" (click)="clickQuitarArchivo(archivo?.id)" style="cursor:pointer;"></mat-icon>
                   <div mat-line>{{archivo?.name || archivo?.nombre}}</div>
                   <!-- <div mat-line> {{note.updated | date}} </div> -->
                 </mat-list-item>

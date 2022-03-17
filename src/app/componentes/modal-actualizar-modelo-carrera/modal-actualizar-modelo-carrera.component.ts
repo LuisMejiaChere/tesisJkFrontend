@@ -46,6 +46,7 @@ export class ModalActualizarModeloCarreraComponent implements OnInit {
   icDelete = icDelete;
   icUpload = icUpload;
   icAdd = icAdd;
+  cont = 0;
 
   constructor(public criterioRepo: CriterioRepository, public periodoRepo: PeriodoLectivoRepository, public indicadorRepo: IndicadorRepository, public subcriterioRepo: SubcriterioRepository, public dialogRef: MatDialogRef<ModalActualizarModeloCarreraComponent>, @Optional() @Inject(MAT_DIALOG_DATA) public obj) {
     dialogRef.disableClose = true;
@@ -86,7 +87,7 @@ export class ModalActualizarModeloCarreraComponent implements OnInit {
     this.formularioEnviado = true;
       this.bloquearBoton = true;
       this.close.emit({ accion: this.accion, data });
-    }
+  }
     // this.formularioEnviado = true;
     // if (form.valid) {
     //   this.bloquearBoton = true;
@@ -139,24 +140,30 @@ export class ModalActualizarModeloCarreraComponent implements OnInit {
   }
   
   convertir(archivos = []) {
-    return archivos.map( archivo => { archivo.id = new Date().toISOString() + archivo.name;
-                                      archivo.sube = true ; archivo.clase = 'adjunto-target'; return archivo;} );
+    return archivos.map( archivo => {  archivo.id = this.cont;
+                                      archivo.id2 = new Date().toISOString() + archivo.name;
+                                      archivo.sube = true ; 
+                                      archivo.clase = 'adjunto-target'; 
+                                      this.cont++; 
+                                      return archivo;} );
+                                     
   }
 
   validar(archivos = []) {
     return archivos.map( archivo => { this.extensiones.indexOf(archivo.type) !== -1 ? archivo.sube = false : ""; return archivo; })
   }
 
-  clickQuitarArchivo(file) {
-    console.log( this.archivosTodos);
-    this.removeItemFromArr( this.archivosTodos, file );
+  clickQuitarArchivo(id) {
+    console.log(id);
+    this.archivos.forEach(function(car, index, object) {
+      if(car.id === id){
+        object.splice(index, 1);
+      }
+    });
     this.actualizarLista();
   }
 
-  removeItemFromArr = ( arr, item ) => {
-    var i = arr.indexOf( item );
-    i !== -1 && arr.splice( i, 1 );
-  };
+
 
   actualizarLista() {
     this.setArchivosTodos();
@@ -164,6 +171,7 @@ export class ModalActualizarModeloCarreraComponent implements OnInit {
 
   setArchivosTodos() {
     this.archivosTodos = [...this.archivos];
+    console.log(this.archivosTodos);
   }
 
   SubirArchivos() {
@@ -185,14 +193,14 @@ export class ModalActualizarModeloCarreraComponent implements OnInit {
       const xhr = new XMLHttpRequest();
       const form = new FormData();
 
-      documento.forEach(el => form.append('documento', el));
+      documento.forEach(el => form.append('documento[]', el));
       form.append('id_periodo', id_periodo)
       form.append('id_subcriterio', id_subcriterio)
       form.append('id_indicador', id_indicador)
       form.append('elemento_fundamental', elemento_fundamental)
       form.append('estado', estado);
 
-      console.log(form);
+      //console.log(form+" Formulario");
       
 
       xhr.onreadystatechange = () => {
@@ -201,11 +209,11 @@ export class ModalActualizarModeloCarreraComponent implements OnInit {
             ? (exito(JSON.parse(xhr.response)), this.enviarFormulario(JSON.parse(xhr.response)) )
             : fallo(xhr.response)
           : ' '
-    };
+      }; 
 
       xhr.open('POST', URL, true)
       let data = xhr.send(form)
-      console.log(data);
+      //console.log(data+" Esta es ");
       
 
     });

@@ -27,7 +27,8 @@ export class ModeloCarreraRepository {
     obtenerModeloCarreraFecth() {
         this.url.obtenerModeloCarrera().subscribe((data: ModeloCarreraRespuesta) => {
             if (data.ok) {
-                this.modeloCarrera = data.datos;                
+                this.modeloCarrera = data.datos;   
+                console.log( data.datos);             
             } else {
                 this.notificacion.openSnackBar(data.observacion);
                 // this.usuarioRepo.logout();

@@ -68,8 +68,9 @@ export class ModeloCarreraComponent implements OnInit {
   }
 
   openDialog(accion: string, data: ModeloCarrera) {
-    if (accion === 'Modificar') {
-      let valor: ModeloCarrera = Object.assign({}, data)
+    if (accion === 'Modificar') { 
+      let valor: ModeloCarrera = Object.assign({}, data);
+
       this.dialogRef = this.dialog.open(ModalActualizarModeloCarreraComponent, {
         // width: "1224px",
         // height: "1024px",
@@ -101,7 +102,7 @@ export class ModeloCarreraComponent implements OnInit {
   }
 
   registrarModeloCarrera(data: any) {
-    console.log(data);
+    //console.log(data+" Por aqui");
     this.cargando = true
     data.ok
     ? (this.snack.openSnackBar(data.observacion), this.modeloCarreraRepo.obtenerModeloCarreraFecth(), this.table.renderRows(), this.dialogRef.close())
@@ -127,7 +128,7 @@ export class ModeloCarreraComponent implements OnInit {
   modificarModeloCarrera(data: ModeloCarrera) {
     this.cargando = true;
     this.modeloCarreraRepo.modificarModeloCarrera(data).subscribe((data: any) => {
-      console.log(data);
+      console.log(data.message);
       data.ok
         ? (this.snack.openSnackBar(data.mensaje), this.modeloCarreraRepo.obtenerModeloCarreraFecth(), this.table.renderRows(), this.dialogRef.close())
         : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
