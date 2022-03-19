@@ -28,49 +28,43 @@ export class SubcriterioRepository {
 
     obtenerSubcriterioFecth() {
         this.url.obtenerSubcriterio().subscribe((data: SubcriterioRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.subCriterio = data.datos;                
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
-        });
+        })
     }
 
     obtenerSubcriterioActivoFecth() {
         this.url.obtenerSubcriterioActivos().subscribe((data: SubcriterioRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.subCriterioActivo = data.datos;                
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
         });
     }
 
     obtenerSubcriterioId(data :number) {
         this.url.obtenerSubcriterioId(data).subscribe((data: SubcriterioRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.subCriterio = data.datos;           
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
         });
     }
 
@@ -84,7 +78,7 @@ export class SubcriterioRepository {
     registrarSubcriterio(data: Subcriterio) {
         return this.url.registrarSubcriterio(data).pipe(
             map((data: SubcriterioRespuesta) => {
-                data.ok ? this.subCriterio.unshift(data.datos) : '';
+                data.estado ? this.subCriterio.unshift(data.datos) : '';
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));
@@ -95,8 +89,8 @@ export class SubcriterioRepository {
             map((data: SubcriterioRespuesta) => {
                 console.log(data);
                 
-                data.ok ? 
-                this.subCriterio.splice(this.subCriterio.findIndex(p => p.id_subcriterio === data.datos.id_subcriterio), 1, data.datos) : ''
+                data.estado ? 
+                this.subCriterio.splice(this.subCriterio.findIndex(p => p.id === data.datos.id), 1, data.datos) : ''
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));

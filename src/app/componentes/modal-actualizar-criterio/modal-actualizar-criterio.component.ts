@@ -25,12 +25,10 @@ export class ModalActualizarCriterioComponent {
     dialogRef.disableClose = true;
     
     this.accion = obj.accion;
-    if(this.accion === 'Modificar'){
-      this.dataCriterio = obj.valor;
-    }else{
-      this.dataCriterio = obj.data;
-    }
-    this.dataCriterio.estado === "1" ? this.isChecked :this.isChecked=false;
+    this.dataCriterio = this.fabrica(obj.data);
+    this.dataCriterio.estado === "1" ? this.isChecked:this.isChecked=false;
+    console.log('constrctr', this.dataCriterio.estado);
+    
   }
   
   fabrica(data = {}) {
@@ -50,20 +48,13 @@ export class ModalActualizarCriterioComponent {
     this.formularioEnviado = true;
     if (form.valid) {
       this.bloquearBoton = true;
-      const data = { ...this.getDatos() }
+      const data = { ...this.dataCriterio }
+      data.estado = this.dataCriterio.estado? "1":"0";
       this.close.emit({ accion: this.accion, data });
     }
     this.bloquearBoton = false;
   }
 
-  getDatos(): Criterio {
-    const flag = this.dataCriterio.estado? "1":"0";
-    return {
-      id_criterio: this.dataCriterio.id_criterio,
-      criterio: this.dataCriterio.criterio,
-      estado: flag
-    };
-  }
 
 }
 

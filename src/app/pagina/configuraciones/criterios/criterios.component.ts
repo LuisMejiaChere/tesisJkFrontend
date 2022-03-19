@@ -59,18 +59,10 @@ export class CriteriosComponent implements OnInit {
   }
 
   openDialog(accion: string, data: Criterio) {
-    if(accion === 'Modificar'){
-      let valor: Criterio = Object.assign({},data)
-      this.dialogRef = this.dialog.open(ModalActualizarCriterioComponent, {
-        width: "600px",
-        data: { accion, valor },
-      });
-    }else{
-      this.dialogRef = this.dialog.open(ModalActualizarCriterioComponent, {
-        width: "600px",
-        data: { accion, data },
-      });
-    }
+    this.dialogRef = this.dialog.open(ModalActualizarCriterioComponent, {
+      width: "600px",
+      data: { accion, data },
+    });
 
     if (this.dialogSubmitSubscription) {
       this.dialogSubmitSubscription.unsubscribe();
@@ -91,43 +83,31 @@ export class CriteriosComponent implements OnInit {
       });
   }
 
-  registrarCriterio(data: Criterio) {
-    this.cargando = true
-    this.criterioRepo.registrarCriterio(data).subscribe((data: any) => {
-      data.ok
-        ? (this.criterioRepo.obtenerCriterioFecth(), this.table.renderRows(), this.dialogRef.close())
-        : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-      this.cargando = false
-      this.snack.openSnackBar(data.mensaje);
-    }, error => {
-      console.log(error);
-      error.error.message === ''
-        ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-        : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true)
-    })
-  }
-
-  modificarCriterio(data: Criterio) {
-    this.cargando = true;
-    this.criterioRepo.modificarCriterio(data).subscribe((data: any) => {
-      console.log(data);
-      data.ok
-        ? (this.criterioRepo.obtenerCriterioFecth(), this.table.renderRows(), this.dialogRef.close())
-        : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-      this.cargando = false
-      this.snack.openSnackBar(data.mensaje);
-    }, error => {
-      console.log(error);
-
-      error.error.message === ''
-        ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-        : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true)
-    })
-  }
-
   eliminarCriterio(data: Criterio) {
     this.cargando = true;
     // this.criterioRepo.modificarCriterio(data).subscribe(this.controlador, this.errores);
+  }
+
+  registrarCriterio(data: Criterio) {
+    this.criterioRepo.registrarCriterio(data).subscribe(this.controlador, this.errores);
+  }
+
+  modificarCriterio(data: Criterio) {
+    this.criterioRepo.modificarCriterio(data).subscribe(this.controlador, this.errores);
+  }
+
+
+  controlador = (data: any) => {
+    if (data.ok) {
+      this.table.renderRows();
+    }
+    this.snack.openSnackBar(data.mensaje);
+    this.dialogRef.close();
+  }
+  
+  errores = (data: any) => {
+    this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+    this.dialogRef.close();
   }
 
 

@@ -28,33 +28,29 @@ export class CriterioRepository {
 
     obtenerCriterioFecth() {
         this.url.obtenerCriterio().subscribe((data: CriterioRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.criterio = data.datos;                
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
         });
     }
 
     obtenerCriterioActivoFecth() {
         this.url.obtenerCriteriActivos().subscribe((data: CriterioRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.criterioActivo = data.datos;                
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
         });
     }
 
@@ -71,7 +67,7 @@ export class CriterioRepository {
     registrarCriterio(data: Criterio) {
         return this.url.registrarCriterio(data).pipe(
             map((data: CriterioRespuesta) => {
-                data.ok ? this.criterio.unshift(data.datos) : '';
+                data.estado ? this.criterio.unshift(data.datos) : '';
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));
@@ -80,17 +76,13 @@ export class CriterioRepository {
     modificarCriterio(data: Criterio) {
         return this.url.modificarCriterio(data).pipe(
             map((data: CriterioRespuesta) => {
-                console.log(data);
-                
-                data.ok ? 
-                this.criterio.splice(this.criterio.findIndex(p => p.id_criterio === data.datos.id_criterio), 1, data.datos) : ''
+                data.estado ? 
+                this.criterio.splice(this.criterio.findIndex(p => p.id === data.datos.id), 1, data.datos) : ''
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));
 
-    }
-
-   
+    }   
 
 }
 

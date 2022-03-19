@@ -28,33 +28,29 @@ export class PeriodoLectivoRepository {
 
     obtenerPeriodoLectivoFecth() {
         this.url.obtenerPeriodoLectivo().subscribe((data: PeriodoLectivoRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.periodo = data.datos;                
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
         });
     }
 
     obtenerPeriodoLectivoActivoFecth() {
         this.url.obtenerPeriodosLectivosActivos().subscribe((data: PeriodoLectivoRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.periodoActivo = data.datos;                
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
         });
     }
 
@@ -72,7 +68,7 @@ export class PeriodoLectivoRepository {
     registrarPeriodo(data: PeriodoLectivo) {
         return this.url.registrarPeriodoLectivo(data).pipe(
             map((data: PeriodoLectivoRespuesta) => {
-                data.ok ? this.periodo.unshift(data.datos) : '';
+                data.estado ? this.periodo.unshift(data.datos) : '';
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));
@@ -80,10 +76,9 @@ export class PeriodoLectivoRepository {
 
     modificarPeriodo(data: PeriodoLectivo) {
         return this.url.modificarPeriodoLectivo(data).pipe(
-            map((data: PeriodoLectivoRespuesta) => {
-                console.log(data);   
-                data.ok ? 
-                this.periodo.splice(this.periodo.findIndex(p => p.id_periodo === data.datos.id_periodo), 1, data.datos) : ''
+            map((data: PeriodoLectivoRespuesta) => {  
+                data.estado ? 
+                this.periodo.splice(this.periodo.findIndex(p => p.id === data.datos.id), 1, data.datos) : ''
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));

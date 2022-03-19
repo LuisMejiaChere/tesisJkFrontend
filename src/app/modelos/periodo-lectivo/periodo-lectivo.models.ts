@@ -1,9 +1,9 @@
 export class PeriodoLectivo{
     constructor(
-        public id_periodo?: number,
+        public id?: number,
         public periodo?: string,
-        public estado?: string
+        public estado?: any
     ) { 
-        this.estado = '1';
+        this.estado = 'false';
     }
 } 

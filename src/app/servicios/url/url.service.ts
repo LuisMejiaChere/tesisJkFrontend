@@ -108,7 +108,7 @@ export class UrlService {
 
   registrarCriterio(data: Criterio): Observable<CriterioRespuesta> {
     return this.http.post<CriterioRespuesta>(
-      this.url + "Criterio/insertarCriterio",
+      this.url + "Criterio/actualizarCriterio",
       data,
       this.getOptions()
     );
@@ -116,7 +116,7 @@ export class UrlService {
 
   modificarCriterio(data: Criterio): Observable<CriterioRespuesta> {
     return this.http.put<CriterioRespuesta>(
-      this.url + `Criterio/actualizarCriterio/${data.id_criterio}`,
+      this.url + `Criterio/actualizarCriterio/${data.id}`,
       data,
       this.getOptions()
     );
@@ -136,7 +136,7 @@ export class UrlService {
 
   registrarSubcriterio(data: Subcriterio): Observable<SubcriterioRespuesta> {
     return this.http.post<SubcriterioRespuesta>(
-      this.url + "Subcriterio/insertarSubcriterio",
+      this.url + "Subcriterio/actualizarSubcriterio",
       data,
       this.getOptions()
     );
@@ -144,17 +144,15 @@ export class UrlService {
 
   modificarSubcriterio(data: Subcriterio): Observable<SubcriterioRespuesta> {
     return this.http.put<SubcriterioRespuesta>(
-      this.url + `Subcriterio/actualizarSubcriterio/${data.id_subcriterio}`,
+      this.url + `Subcriterio/actualizarSubcriterio/${data.id}`,
       data,
       this.getOptions()
     );
   }
 
-  obtenerSubcriterioId(id_criterio: number): Observable<SubcriterioRespuesta> {
-    let data = { id_criterio: id_criterio }
-    console.log(data);
-
-    return this.http.put<SubcriterioRespuesta>(this.url + `Subcriterio/buscarSubcriterio/${id_criterio}`, data, this.getOptions());
+  obtenerSubcriterioId(id: number): Observable<SubcriterioRespuesta> {
+    let data = { id: id }
+    return this.http.put<SubcriterioRespuesta>(this.url + `Subcriterio/buscarSubcriterio/${id}`, data, this.getOptions());
   }
 
 
@@ -165,17 +163,17 @@ export class UrlService {
   // Indicadores
   obtenerIndicador(): Observable<IndicadorRespuesta> {
     return this.http.get<IndicadorRespuesta>(
-      this.url + "Indicador/seleccionarIndicador"
+      this.url + "indicador/seleccionarIndicador"
     );
   }
 
   obtenerIndicadorActivos(): Observable<IndicadorRespuesta> {
-    return this.http.get<IndicadorRespuesta>(this.url + 'Indicador/seleccionarIndicador_activo');
+    return this.http.get<IndicadorRespuesta>(this.url + 'indicador/seleccionarIndicador_activo');
   }
 
   registrarIndicador(data: Indicador): Observable<IndicadorRespuesta> {
     return this.http.post<IndicadorRespuesta>(
-      this.url + "Indicador/insertarIndicador",
+      this.url + "Indicador/actualizarIndicador",
       data,
       this.getOptions()
     );
@@ -209,7 +207,7 @@ export class UrlService {
     data: PeriodoLectivo
   ): Observable<PeriodoLectivoRespuesta> {
     return this.http.post<PeriodoLectivoRespuesta>(
-      this.url + "Periodo/insertarPeriodo",
+      this.url + "Periodo/actualizarPeriodo",
       data,
       this.getOptions()
     );
@@ -219,15 +217,11 @@ export class UrlService {
     data: PeriodoLectivo
   ): Observable<PeriodoLectivoRespuesta> {
     return this.http.put<PeriodoLectivoRespuesta>(
-      this.url + `Periodo/actualizarPeriodo/${data.id_periodo}`,
+      this.url + `Periodo/actualizarPeriodo/${data.id}`,
       data,
       this.getOptions()
     );
   }
-
-
-
-
 
 
   // Modelo carrera

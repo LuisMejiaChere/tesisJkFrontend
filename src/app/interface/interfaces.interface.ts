@@ -20,13 +20,13 @@ export interface UsuarioLogoutRespuesta {
 }
 
 export interface CriterioRespuesta {
-  ok?: boolean;
+  estado?: boolean;
   observacion?: string;
   datos?: Criterio[] & Criterio;
 }
 
 export interface SubcriterioRespuesta {
-  ok?: boolean;
+  estado?: boolean;
   observacion?: string;
   datos?: Subcriterio[] & Subcriterio;
 }
@@ -49,7 +49,7 @@ export interface InicioSesionI {
 }
 
 export interface PeriodoLectivoRespuesta {
-  ok?: boolean;
+  estado?: boolean;
   observacion?: string;
   datos?: PeriodoLectivo[] & PeriodoLectivo;
 }

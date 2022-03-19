@@ -46,8 +46,8 @@ export class PeriodoLectivoComponent implements OnInit {
 
   obtenerData() {
     this.periodoRepo.datosEmitir.subscribe((data: string) => {
-      data === 'second' ? (this.cargando = false, this.datosCargados = true) : '';
-      this.dataSource = new MatTableDataSource(this.periodoRepo.obtenerPeriodos);
+      data === 'second' ? this.datosCargados = true : '';
+      this.dataSource = new MatTableDataSource(this.periodoRepo.obtenerPeriodos);  
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -59,18 +59,10 @@ export class PeriodoLectivoComponent implements OnInit {
   }
 
   openDialog(accion: string, data: PeriodoLectivo) {
-    if(accion === 'Modificar'){
-      let valor: PeriodoLectivo = Object.assign({},data)
-      this.dialogRef = this.dialog.open(ModalActualizarPeriodoComponent, {
-        width: "600px",
-        data: { accion, valor },
-      });
-    }else{
-      this.dialogRef = this.dialog.open(ModalActualizarPeriodoComponent, {
-        width: "600px",
-        data: { accion, data },
-      });
-    }
+    this.dialogRef = this.dialog.open(ModalActualizarPeriodoComponent, {
+      width: "600px",
+      data: { accion, data },
+    });
  
     if (this.dialogSubmitSubscription) {
       this.dialogSubmitSubscription.unsubscribe();
@@ -91,44 +83,29 @@ export class PeriodoLectivoComponent implements OnInit {
       });
   }
 
+ eliminarPeriodo(data: PeriodoLectivo) {
+    this.cargando = true;
+  }
+
   registrarPeriodo(data: PeriodoLectivo) {
-    this.cargando = true
-    this.periodoRepo.registrarPeriodo(data).subscribe((data: any) => {
-      console.log(data);
-      data.ok
-        ? (this.periodoRepo.obtenerPeriodoLectivoFecth(), this.table.renderRows(), this.dialogRef.close())
-        : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-      this.cargando = false
-      this.snack.openSnackBar(data.mensaje);
-    }, error => {
-      console.log(error);
-      error.error.message === ''
-        ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-        : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true)
-    })
+    this.periodoRepo.registrarPeriodo(data).subscribe(this.controlador, this.errores);
   }
 
   modificarPeriodo(data: PeriodoLectivo) {
-    this.cargando = true;
-    this.periodoRepo.modificarPeriodo(data).subscribe((data: any) => {  
-      console.log(data);
-      data.ok 
-        ? (this.periodoRepo.obtenerPeriodoLectivoFecth(), this.table.renderRows(), this.dialogRef.close())
-        : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-    this.cargando = false
-    this.snack.openSnackBar(data.mensaje);
-    }, error => {
-      console.log(error);
-      
-      error.error.message === ''
-        ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-        : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true)
-    })
+    this.periodoRepo.modificarPeriodo(data).subscribe(this.controlador, this.errores);
   }
 
- eliminarPeriodo(data: PeriodoLectivo) {
-    this.cargando = true;
-    // this.periodoRepo.modificarCriterio(data).subscribe(this.controlador, this.errores);
+  controlador = (data: any) => {
+    if (data.ok) {
+      this.table.renderRows();
+    }
+    this.snack.openSnackBar(data.mensaje);
+    this.dialogRef.close();
+  }
+  
+  errores = (data: any) => {
+    this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+    this.dialogRef.close();
   }
 
 

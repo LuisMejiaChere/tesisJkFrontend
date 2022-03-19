@@ -15,7 +15,7 @@ import icbaselinetextsnippet from '@iconify/icons-ic/baseline-text-snippet';
 import { MensajeService } from 'src/app/servicios/mensajes/mensaje.service';
 import { ModalActualizarModeloCarreraComponent } from 'src/app/componentes/modal-actualizar-modelo-carrera/modal-actualizar-modelo-carrera.component';
 import { ModeloCarreraRepository } from 'src/app/repositorio/modelo-carrera/modelo-carrera.repository';
-
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ModeloCarrera } from 'src/app/modelos/modelo-carrera/modelo-carrera.models';
 
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -27,13 +27,21 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   selector: 'vex-modelo-carrera',
   templateUrl: './modelo-carrera.component.html',
   styleUrls: ['./modelo-carrera.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ModeloCarreraComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   dialogRef: MatDialogRef<ModalActualizarModeloCarreraComponent, any>;
-  mostrarColumnas: string[] = ['num', 'criterio', 'subcriterio', 'indicador', 'tipo', 'descripcion', 'elemento_fundamental', 'estado', 'action'];
+  columnsToDisplay : string[] =  ['num', 'criterio', 'subcriterio', 'indicador','estado', 'action'];
+  // mostrarColumnas: string[] = ['num', 'criterio', 'subcriterio', 'indicador', 'tipo', 'descripcion', 'elemento_fundamental', 'estado', 'action'];
   expandedElement: any | null;
   dataSource = null;
   icSearch = icSearch;
@@ -46,6 +54,9 @@ export class ModeloCarreraComponent implements OnInit {
   cargando = true;
   dialogSubmitSubscription: any;
   searchCtrl = new FormControl();
+
+
+
   constructor(public dialog: MatDialog, private snack: MensajeService, public modeloCarreraRepo: ModeloCarreraRepository) {
     this.modeloCarreraRepo.obtenerModeloCarreraFecth();
   }

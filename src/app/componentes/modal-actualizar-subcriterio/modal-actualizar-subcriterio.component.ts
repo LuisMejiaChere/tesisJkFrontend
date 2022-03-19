@@ -25,16 +25,12 @@ export class ModalActualizarSubcriterioComponent {
     public dialogRef: MatDialogRef<ModalActualizarSubcriterioComponent>, @Optional() @Inject(MAT_DIALOG_DATA) public obj) {
     dialogRef.disableClose = true;
     this.accion = obj.accion;
-    if(this.accion === 'Modificar'){
-      this.dataSubcriterio = obj.valor;
-    }else{
-      this.dataSubcriterio = obj.data;
-    }
+    this.dataSubcriterio = this.fabrica(obj.data);
     this.dataSubcriterio.estado === "1" ? this.isChecked :this.isChecked=false;
   }
 
    ngOnInit(): void {
-     this.criterioRepo.obtenerCriterioFecth();  }
+     this.criterioRepo.obtenerCriterioActivoFecth();  }
   
   fabrica(data = {}) {
     return (Object.values(data)).length === 0 ? new Subcriterio() : { ...data };
@@ -52,22 +48,23 @@ export class ModalActualizarSubcriterioComponent {
     this.formularioEnviado = true;
     if (form.valid) {
       this.bloquearBoton = true;
-      const data = { ...this.getDatos() }
+      const data = { ...this.dataSubcriterio }
+      data.estado = this.dataSubcriterio.estado? "1":"0";
       this.close.emit({ accion: this.accion, data });
     }
   }
 
 
 
-  getDatos(): Subcriterio {
-    const flag = this.dataSubcriterio.estado? "1":"0";
-    return {
-      id_subcriterio: this.dataSubcriterio.id_subcriterio,
-      id_criterio: this.dataSubcriterio.id_criterio,
-      subcriterio: this.dataSubcriterio.subcriterio,
-      estado: flag
-    };
-  }
+  // getDatos(): Subcriterio {
+  //   const flag = this.dataSubcriterio.estado? "1":"0";
+  //   return {
+  //     id: this.dataSubcriterio.id,
+  //     id_criterio: this.dataSubcriterio.id_criterio,
+  //     subcriterio: this.dataSubcriterio.subcriterio,
+  //     estado: flag
+  //   };
+  // }
 
 }
 

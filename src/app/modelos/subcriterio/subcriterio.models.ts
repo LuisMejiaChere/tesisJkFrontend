@@ -1,10 +1,10 @@
 export class Subcriterio {
     constructor(
-        public id_subcriterio?: number,
+        public id?: number,
         public subcriterio?: string,
         public estado?: string,
-        public id_criterio?: number,
+        public criterioid?: number,
     ) { 
-        this.estado = '1';
+        this.estado = '0';
     }
 } 
