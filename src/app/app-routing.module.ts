@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'principal',
-    canLoad: [LogeoGuard],
+    canActivate: [LogeoGuard],
     component: PaginaComponent,
     loadChildren: () => import('src/app/pagina/pagina.module').then(m => m.PaginaModule)
   },

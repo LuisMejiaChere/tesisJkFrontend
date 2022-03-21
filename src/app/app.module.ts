@@ -17,6 +17,8 @@ import { PaginaComponent } from './pagina/pagina.component';
 import { ServicioModule } from './servicios/servicios.module';
 import { AdmininistradorGuard } from './guards/administrador.guard';
 import { DirectivasModule } from './directivas/directivas.module';
+import { LogeoGuard } from './guards/logeo.guard';
+import { NoLogeoGuard } from './guards/no-logeo.guard';
 
 
 @NgModule({
@@ -41,7 +43,7 @@ import { DirectivasModule } from './directivas/directivas.module';
     // Vex
     VexModule,
   ],
-  providers: [AdmininistradorGuard],
+  providers: [AdmininistradorGuard,  LogeoGuard,NoLogeoGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

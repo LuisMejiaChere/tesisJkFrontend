@@ -6,10 +6,10 @@ import { UsuarioRepository } from '../repositorio/usuario/usuario.repository';
 @Injectable({
   providedIn: 'root'
 })
-export class LogeoGuard{
+export class LogeoGuard implements CanActivate{
   constructor(public ruta: Router, private usuario: UsuarioRepository) { }
 
-  canLoad(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (!this.usuario.estaAutenticado()) {
       this.ruta.navigate(['/logeo']);
       return false;
