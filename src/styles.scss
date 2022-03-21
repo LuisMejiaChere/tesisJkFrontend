@@ -767,3 +767,34 @@
       }
   }
 }
+// Dialog
+.modhyobitto-dialog-container{
+    .mat-dialog-container{
+        border-radius: 0;
+    }
+  }
+  .modhyobitto-dialog{
+    max-width: 500px;
+    .mat-dialog-title{
+        border-bottom: 1px solid;
+        // color: map-get($modhyobitto-colors, primary-dark);
+        font-family: 'Roboto', sans-serif;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+    }
+    .mat-dialog-content{
+        margin-bottom: 2rem;
+    }
+    .mat-dialog-actions{
+        justify-content: flex-end;   
+        button{
+          background: transparent;
+          // color: map-get($modhyobitto-colors, primary);
+          font-family: 'RobotoBold', sans-serif;
+          height: 35px;
+          // &:hover, &:focus{
+          //     background: map-get($modhyobitto-colors, subtle-bg);
+          // }
+        }     
+    }
+  }

@@ -90,23 +90,10 @@ export class ModalActualizarEvidenciaComponent implements OnInit, OnDestroy{
   }
 
   clickQuitarArchivo(id) {
-    // console.log(id);
     this.deleteConfirmation(id)
-    
-    // this.actualizarLista();
   }
 
-  enviarFormulario(form: NgForm) {
-  
-    this.formularioEnviado = true;
-    if (form.valid) {
-      this.bloquearBoton = true;
-      const data = { ...this.dataModelo }
-      data.estado = this.dataModelo.estado? "1":"0";
-      this.close.emit({ accion: this.accion, data });
-    }
-    this.bloquearBoton = false;
-  }
+
 
   ngOnInit(): void {
     this.trackFileSelection();
@@ -236,12 +223,9 @@ export class ModalActualizarEvidenciaComponent implements OnInit, OnDestroy{
               this.archivos.forEach(function(car, index, object) {
                 if(car.id === id){
                   object.splice(index, 1);
-                  
                 }
-               
               });
               this.snack.openSnackBar(data.observacion);
-              // this.archivos.push(data.datos)
             }
           })
         }

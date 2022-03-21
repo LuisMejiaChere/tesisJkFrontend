@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpRequest, HttpEvent,HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient} from '@angular/common/http';
 import { Overlay } from '@angular/cdk/overlay';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModalDialodErrorComponent } from 'src/app/componentes/modal-dialog-error/modal-dialog-error.component';
-import { AnimationPlayer } from '@angular/animations';
-
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +13,10 @@ import { AnimationPlayer } from '@angular/animations';
 export class UploadFilesService {
 
   constructor(
-    private http: HttpClient,
-    private router: Router,
-    private snackbar: MatSnackBar,
+   
     private dialog: MatDialog,
     private overlay: Overlay
   ) { }
-
-
-
 
 
   uploadFile(form_data: any,){

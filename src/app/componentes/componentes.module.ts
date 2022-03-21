@@ -13,6 +13,7 @@ import { ModalDialodErrorComponent } from "./modal-dialog-error/modal-dialog-err
 import { DirectivasModule } from "../directivas/directivas.module";
 import { ArrastrarYSoltarDirective } from "../directivas/arrastrar-y-soltar-directive/arrastrar-y-soltar.directive";
 
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [

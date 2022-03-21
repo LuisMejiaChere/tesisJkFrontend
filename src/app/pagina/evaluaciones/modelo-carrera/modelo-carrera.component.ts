@@ -9,6 +9,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
+import icAttachFile from '@iconify/icons-ic/twotone-attach-file';
+
+
 import icSearch from '@iconify/icons-ic/twotone-search';
 import icbaselinetextsnippet from '@iconify/icons-ic/baseline-text-snippet';
 
@@ -47,6 +50,7 @@ export class ModeloCarreraComponent implements OnInit {
   expandedElement: any | null;
   dataSource = null;
   icSearch = icSearch;
+  icAttachFile = icAttachFile;
   icMoreVert = icMoreVert;
   icDelete = icDelete;
   icEdit = icEdit;

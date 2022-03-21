@@ -87,6 +87,8 @@
           <div class="example-element-position"><b>Criterio: </b> {{element.criterio}} </div>
           <div class="example-element-position"><b>Subcriterio: </b> {{element.subcriterio}} </div>
           <div class="example-element-position"><b>Indicador: </b> {{element.indicador}} </div>
+          <mat-icon matTooltip="Evidencias: {{element.totalarchivos}}" *ngIf="element.totalarchivos !== '0'" [icIcon]="icAttachFile"></mat-icon>
+          <!-- <div class="example-element-position"><b>Evidencias adjuntas: </b> {{element.totalarchivos}} </div> -->
         </div>
       </div>
     </td>
