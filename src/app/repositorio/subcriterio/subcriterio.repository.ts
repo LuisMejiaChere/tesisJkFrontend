@@ -16,6 +16,7 @@ import { SubcriterioRespuesta } from 'src/app/interface/interfaces.interface';
 
 export class SubcriterioRepository {
     subCriterio: Subcriterio[] =[];
+    subCriterioId: Subcriterio[] =[];
     subCriterioActivo: Subcriterio[] =[];
     datosEmitir = new BehaviorSubject('first');
 
@@ -57,7 +58,7 @@ export class SubcriterioRepository {
     obtenerSubcriterioId(data :number) {
         this.url.obtenerSubcriterioId(data).subscribe((data: SubcriterioRespuesta) => {
             if (data.estado) {
-                this.subCriterio = data.datos;           
+                this.subCriterioId = data.datos;           
             } else {
                 this.notificacion.openSnackBar(data.observacion);
             }
@@ -71,6 +72,10 @@ export class SubcriterioRepository {
 
     get obtenerSubcriterios() {
         return this.subCriterio;
+    }
+
+    get obtenerSubcriterioUnicoId() {
+        return this.subCriterioId;
     }
 
  

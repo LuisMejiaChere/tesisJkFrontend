@@ -41,31 +41,31 @@
         <td mat-cell *matCellDef="let element"> {{element.indicador}} </td>
       </ng-container>
 
-      <!-- Name Column -->
+    
       <ng-container matColumnDef="descripcion" style="width: 10px;">
         <th mat-header-cell *matHeaderCellDef mat-sort-heade> <b>Descripción</b></th>
         <td mat-cell *matCellDef="let element">
           {{(element.descripcion.length > 80) ? ((element.descripcion).slice(0, 70) + '...') : element.descripcion}}
-          <!-- {{element.descripcion}}  -->
         </td>
       </ng-container>
 
-      <!-- Weight Column -->
+      <!-- Estado -->
       <ng-container matColumnDef="estado" stickyEnd>
         <th mat-header-cell *matHeaderCellDef> <b>Estado</b></th>
         <td mat-cell *matCellDef="let element" class="tdEstado">
 
-          <mat-chip-list class="example-chip">
-            <mat-chip fxFlex="none" class="example-box chipActivo" *ngIf="element.estado==='1'">
+          <mat-chip-list class="example-chip" >
+            <mat-chip fxFlex="none"  class="example-box chipActivo" *ngIf="element.estado==='1'">
               Activo
             </mat-chip>
-            <mat-chip class="example-box" *ngIf="element.estado==='0'">
+            <mat-chip  class="example-box" *ngIf="element.estado==='0'">
               Inactivo
             </mat-chip>
           </mat-chip-list>
 
         </td>
       </ng-container>
+
 
       <ng-container matColumnDef="action" stickyEnd>
         <th mat-header-cell *matHeaderCellDef> <b></b> </th>

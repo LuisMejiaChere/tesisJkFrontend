@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorService } from './errores/errores.service';
 import { MensajeService } from './mensajes/mensaje.service';
 import { UrlService } from './url/url.service';
+import { UploadFilesService } from './upload-files/upload-files.service';
 
 @NgModule({
   declarations: [],
@@ -15,7 +16,8 @@ import { UrlService } from './url/url.service';
   providers: [
     UrlService,
     ErrorService,
-    MensajeService
+    MensajeService,
+    UploadFilesService
   ]
 })
 

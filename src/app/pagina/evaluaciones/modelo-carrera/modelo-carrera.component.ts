@@ -20,6 +20,7 @@ import { ModeloCarrera } from 'src/app/modelos/modelo-carrera/modelo-carrera.mod
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { ModalActualizarEvidenciaComponent } from 'src/app/componentes/modal-actualizar-evidencia/modal-actualizar-evidencia.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -40,7 +41,8 @@ export class ModeloCarreraComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   dialogRef: MatDialogRef<ModalActualizarModeloCarreraComponent, any>;
-  columnsToDisplay : string[] =  ['num', 'criterio', 'subcriterio', 'indicador','estado', 'action'];
+  dialogRefEvidencia: MatDialogRef<ModalActualizarEvidenciaComponent, any>;
+  columnsToDisplay : string[] =  ['num', 'elementoFundamental','estado', 'action'];
   // mostrarColumnas: string[] = ['num', 'criterio', 'subcriterio', 'indicador', 'tipo', 'descripcion', 'elemento_fundamental', 'estado', 'action'];
   expandedElement: any | null;
   dataSource = null;
@@ -79,19 +81,9 @@ export class ModeloCarreraComponent implements OnInit {
   }
 
   openDialog(accion: string, data: ModeloCarrera) {
-    if (accion === 'Modificar') { 
-      let valor: ModeloCarrera = Object.assign({}, data);
-
-      this.dialogRef = this.dialog.open(ModalActualizarModeloCarreraComponent, {
-        // width: "1224px",
-        // height: "1024px",
-        data: { accion, valor },
-      });
-    } else {
-      this.dialogRef = this.dialog.open(ModalActualizarModeloCarreraComponent, {
-        data: { accion, data },
-      });
-    }
+    this.dialogRef = this.dialog.open(ModalActualizarModeloCarreraComponent, {
+      data: { accion, data },
+    });
 
     if (this.dialogSubmitSubscription) {
       this.dialogSubmitSubscription.unsubscribe();
@@ -99,7 +91,7 @@ export class ModeloCarreraComponent implements OnInit {
 
     this.dialogSubmitSubscription = this.dialogRef.componentInstance.close
       .subscribe(result => {
-
+       
         if (result === undefined) { return; }
 
         if (result.accion === 'Registrar') {
@@ -112,51 +104,59 @@ export class ModeloCarreraComponent implements OnInit {
       });
   }
 
-  registrarModeloCarrera(data: any) {
-    //console.log(data+" Por aqui");
-    this.cargando = true
-    data.ok
-    ? (this.snack.openSnackBar(data.observacion), this.modeloCarreraRepo.obtenerModeloCarreraFecth(), this.table.renderRows(), this.dialogRef.close())
-    : (this.snack.openSnackBar(data.observacion), this.dialogRef.componentInstance.bloquearBoton = false)
-  this.cargando = false
-  // this.snack.openSnackBar(data.observacion);
+
+  openDialogEvicendia(accion: string, data: ModeloCarrera) {
+    this.dialogRefEvidencia = this.dialog.open(ModalActualizarEvidenciaComponent, {
+      // height: '1024px',
+      // width: '1024px',
     
-    // this.cargando = true
-    // this.modeloCarreraRepo.registrarModeloCarrera(data).subscribe((data: any) => {
-    //   data.ok
-    //     ? (this.snack.openSnackBar(data.mensaje), this.modeloCarreraRepo.obtenerModeloCarreraFecth(), this.table.renderRows(), this.dialogRef.close())
-    //     : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-    //   this.cargando = false
-    //   this.snack.openSnackBar(data.mensaje);
-    // }, error => {
-    //   console.log(error);
-    //   error.error.message === ''
-    //     ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-    //     : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true, this.dialogRef.componentInstance.bloquearBoton = false)
-    // })
-  }
+      data: { accion, data },
+    });
 
-  modificarModeloCarrera(data: ModeloCarrera) {
-    this.cargando = true;
-    this.modeloCarreraRepo.modificarModeloCarrera(data).subscribe((data: any) => {
-      console.log(data.message);
-      data.ok
-        ? (this.snack.openSnackBar(data.mensaje), this.modeloCarreraRepo.obtenerModeloCarreraFecth(), this.table.renderRows(), this.dialogRef.close())
-        : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-      this.cargando = false
-      this.snack.openSnackBar(data.mensaje);
-    }, error => {
-      console.log(error);
+    if (this.dialogSubmitSubscription) {
+      this.dialogSubmitSubscription.unsubscribe();
+    }
 
-      error.error.message === ''
-        ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-        : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true, this.dialogRef.componentInstance.bloquearBoton = false)
-    })
+    this.dialogSubmitSubscription = this.dialogRefEvidencia.componentInstance.close
+      .subscribe(result => {
+       
+        if (result === undefined) { return; }
+
+        if (result.accion === 'Registrar') {
+          this.registrarModeloCarrera(result.data);
+        } else if (result.accion === 'Modificar') {
+          this.modificarModeloCarrera(result.data);
+        } else if (result.accion === 'Eliminar') {
+          this.eliminarModeloCarrera(result.data);
+        }
+      });
   }
 
   eliminarModeloCarrera(data: ModeloCarrera) {
     this.cargando = true;
-    // this.modeloCarreraRepo.modificarModeloCarrera(data).subscribe(this.controlador, this.errores);
+    // this.criterioRepo.modificarCriterio(data).subscribe(this.controlador, this.errores);
+  }
+
+  registrarModeloCarrera(data: ModeloCarrera) {
+    this.modeloCarreraRepo.registrarModeloCarrera(data).subscribe(this.controlador, this.errores);
+  }
+
+  modificarModeloCarrera(data: ModeloCarrera) {
+    this.modeloCarreraRepo.modificarModeloCarrera(data).subscribe(this.controlador, this.errores);
+  }
+
+
+  controlador = (data: any) => {
+    if (data.ok) {
+      this.table.renderRows();
+    }
+    this.snack.openSnackBar(data.mensaje);
+    this.dialogRef.close();
+  }
+  
+  errores = (data: any) => {
+    this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+    this.dialogRef.close();
   }
 
   createPDF(data) {

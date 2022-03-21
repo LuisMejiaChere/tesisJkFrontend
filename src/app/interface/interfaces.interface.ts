@@ -32,7 +32,7 @@ export interface SubcriterioRespuesta {
 }
 
 export interface IndicadorRespuesta {
-  ok?: boolean;
+  estado?: boolean;
   observacion?: string;
   datos?: Indicador[] & Indicador;
 }
@@ -55,7 +55,7 @@ export interface PeriodoLectivoRespuesta {
 }
 
 export interface ModeloCarreraRespuesta {
-  ok?: boolean;
+  estado?: boolean;
   observacion?: string;
   datos?: ModeloCarrera[] & ModeloCarrera;
 }

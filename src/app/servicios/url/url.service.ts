@@ -35,8 +35,8 @@ export class UrlService {
 
   constructor(private http: HttpClient) {
     // this.url = `${PROTOCOL}://${HOST}:${PORT}/api/${VERSION}/`;
-    this.url = `${PROTOCOL}://${HOST}/`;
-    // this.url = "http://192.168.0.10/backend.tesis.jk/"
+    // this.url = `${PROTOCOL}://${HOST}/`;
+    this.url = "http://188.166.96.154/backend.tesis.jk/"
     // this.url = "https://backend-tesis-jk.000webhostapp.com/"
   }
 
@@ -76,7 +76,6 @@ export class UrlService {
       .post<UsuarioLoginRespuesta>(this.url + `Usuario/login`, data)
       .pipe(
         map((response) => {
-          console.log(response);
           this.token = response.ok ? response.token : "";
           this.guardarDatosLocalStoras(this.token);
           return response;
@@ -181,7 +180,7 @@ export class UrlService {
 
   modificarIndicador(data: Indicador): Observable<IndicadorRespuesta> {
     return this.http.put<IndicadorRespuesta>(
-      this.url + `Indicador/actualizarIndicador/${data.id_indicador}`,
+      this.url + `Indicador/actualizarIndicador/${data.id}`,
       data,
       this.getOptions()
     );
@@ -227,17 +226,15 @@ export class UrlService {
   // Modelo carrera
   obtenerModeloCarrera(): Observable<ModeloCarreraRespuesta> {
     return this.http.get<ModeloCarreraRespuesta>(
-      this.url + "listar.modelo.evaluacion.carrera"
+      this.url + "Modelo_carrera/seleccionar_modelo_carreras"
     );
   }
 
   registrarModeloCarrera(
     data: ModeloCarrera
   ): Observable<ModeloCarreraRespuesta> {
-    console.log(data);
-    
     return this.http.post<ModeloCarreraRespuesta>(
-      this.url + "Modelo_carrera/insertarModelo_carrera",
+      this.url + "Modelo_carrera/actualizarModelo_carrera",
       data,
       this.getOptions()
     );
@@ -247,10 +244,33 @@ export class UrlService {
     data: ModeloCarrera
   ): Observable<ModeloCarreraRespuesta> {
     return this.http.put<ModeloCarreraRespuesta>(
-      this.url + `Modelo_carrera/actualizarModelo_carrera/${data.id_modelo}`,
+      this.url + `Modelo_carrera/actualizarModelo_carrera/${data.id}`,
       data,
       this.getOptions()
     );
   }
+
+  buscarEvidenciaModeloCarrerabyId(
+    data: any
+  ): Observable<any> {
+    data = {id:data} 
+    return this.http.get<any>(
+      this.url + `Evidencia/seleccionar_evidencias?id=${data.id}`,
+      data,
+    );
+  }
+
+ eliminarEvidenciaModeloCarrerabyId(
+    data: any
+  ): Observable<any> {
+    data = {id:data} 
+    return this.http.delete<any>(
+      this.url + `Evidencia/eliminarEvidencia?id=${data.id}`,
+      data,
+    );
+  }
+
+
+ 
 
 }

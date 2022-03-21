@@ -24,7 +24,7 @@ export class IndicadoresComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   dialogRef: MatDialogRef<ModalActualizarIndicadorComponent, any>;
-  mostrarColumnas: string[] = ["num", "indicador", "descripcion","estado", "action"];
+  mostrarColumnas: string[] = ["num", "indicador", 'descripcion',"estado", "action"];
   dataSource = null;
   icSearch = icSearch;
   icMoreVert = icMoreVert;
@@ -52,12 +52,13 @@ export class IndicadoresComponent implements OnInit {
       data === "second"
         ? ((this.cargando = false), (this.datosCargados = true))
         : "";
-      this.dataSource = new MatTableDataSource(
-        this.indicadorRepo.obtenerIndicadores
+      this.dataSource = new MatTableDataSource(this.indicadorRepo.obtenerIndicadores
       );
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+    console.log(this.indicadorRepo.obtenerIndicadores);
+    
   }
 
   filtrar(event: Event) {
@@ -66,18 +67,10 @@ export class IndicadoresComponent implements OnInit {
   }
 
   openDialog(accion: string, data: Indicador) {
-    if(accion === 'Modificar'){
-      let valor: Indicador = Object.assign({},data)
-      this.dialogRef = this.dialog.open(ModalActualizarIndicadorComponent, {
-        width: "600px",
-        data: { accion, valor },
-      });
-    }else{
-      this.dialogRef = this.dialog.open(ModalActualizarIndicadorComponent, {
-        width: "600px",
-        data: { accion, data },
-      });
-    }
+    this.dialogRef = this.dialog.open(ModalActualizarIndicadorComponent, {
+      width: "600px",
+      data: { accion, data },
+    });
   
     if (this.dialogSubmitSubscription) {
       this.dialogSubmitSubscription.unsubscribe();
@@ -99,44 +92,33 @@ export class IndicadoresComponent implements OnInit {
       });
   }
 
-  registrarIndicador(data: Indicador) {
-    this.cargando = true;
-    this.indicadorRepo.registrarIndicador(data).subscribe(
-      (data: any) => {
-        console.log(data);
-      data.ok
-        ? (this.indicadorRepo.obtenerIndicadorFecth(), this.table.renderRows(), this.dialogRef.close())
-        : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-      this.cargando = false
-      this.snack.openSnackBar(data.mensaje);
-    }, error => {
-      console.log(error);
-      error.error.message === ''
-        ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-        : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true)
-    })
-  }
-
-  modificarIndicador(data: Indicador) {
-    this.cargando = true;
-    this.indicadorRepo.modificarIndicador(data).subscribe((data: any) => {  
-      console.log(data);
-      data.ok 
-        ? (this.indicadorRepo.obtenerIndicadorFecth(), this.table.renderRows(), this.dialogRef.close())
-        : (this.snack.openSnackBar(data.mensaje), this.dialogRef.componentInstance.bloquearBoton = false)
-    this.cargando = false
-    this.snack.openSnackBar(data.mensaje);
-    }, error => {
-      console.log(error);
-      
-      error.error.message === ''
-        ? (this.snack.openSnackBar(error.error.message), this.cargando = true)
-        : (this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.'), this.cargando = true)
-    })
-  }
+  
 
   eliminarIndicador(data: Indicador) {
     this.cargando = true;
     // this.indicadorRepo.modificarCriterio(data).subscribe(this.controlador, this.errores);
+  }
+
+
+  registrarIndicador(data: Indicador) {
+    this.indicadorRepo.registrarIndicador(data).subscribe(this.controlador, this.errores);
+  }
+
+  modificarIndicador(data: Indicador) {
+    this.indicadorRepo.modificarIndicador(data).subscribe(this.controlador, this.errores);
+  }
+
+
+  controlador = (data: any) => {
+    if (data.ok) {
+      this.table.renderRows();
+    }
+    this.snack.openSnackBar(data.mensaje);
+    this.dialogRef.close();
+  }
+  
+  errores = (data: any) => {
+    this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+    this.dialogRef.close();
   }
 }

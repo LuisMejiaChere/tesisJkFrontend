@@ -80,5 +80,13 @@ export class UsuarioRepository {
 
     }
 
+    TraerRol(){
+        if (localStorage.getItem('usuario')) {
+          return this.usuario.rol = JSON.parse(localStorage.getItem('usuario')).id_rol
+        } else {
+            this.limpiarApp();
+        }
+    }
+
 }
 

@@ -1,0 +1,61 @@
+.example-form {
+    min-width: 150px;
+    // max-width: 0px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  mat-slide-toggle{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+//   .mat-dialog-content {
+//     max-width: 100% !important;
+//     max-height: 95% !important;
+//     margin: auto;
+//             display: block;
+           
+//             animation-name: zoom;
+//             animation-duration: 0.6s;
+// }
+
+.modhyobitto-file-uploader{
+  background-color: #eee;
+    border: 2px dashed #7cb342;
+    padding: 3rem;
+}
+
+.modhyobitto-file-uploader .file-uploader__instructions {
+  color: #7cb342;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+button.secondary-button .primary-button {
+  background: #7cb342;
+  border: none;
+  box-shadow: none;
+  color: #fff;
+  font-family: Roboto,sans-serif;
+  padding: 0 20px;
+  text-transform: uppercase;
+  height: 50px;
+}
+
+button.primary-button {
+  background: #7cb342;
+  border: none;
+  box-shadow: none;
+  color: #fff;
+  font-family: Roboto,sans-serif;
+  padding: 0 20px;
+  text-transform: uppercase;
+  height: 50px;
+}

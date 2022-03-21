@@ -2,41 +2,80 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpRequest, HttpEvent,HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Overlay } from '@angular/cdk/overlay';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ModalDialodErrorComponent } from 'src/app/componentes/modal-dialog-error/modal-dialog-error.component';
+import { AnimationPlayer } from '@angular/animations';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadFilesService {
 
-  //Url obtenida de la variable de enviroments
-    PROTOCOL = "http";
-    HOST = "tesis.alwaysdata.net/backend.tesis.jk/Modelo_carrera/insertarModelo_carrera" || location.hostname;
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog,
+    private overlay: Overlay
+  ) { }
 
 
-    baseUrl = `${this.PROTOCOL}://${this.HOST}/`;
-  //Inyeccion de HttpClient
-  constructor(private http: HttpClient) { }
 
-  //Metodo que envia los archivos al endpoint /upload 
-  upload(file: File): Observable<HttpEvent<any>>{
-    const formData: FormData = new FormData();
-    formData.append('files', file);
-   
-    const req = new HttpRequest('POST', `${this.baseUrl}`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
-    return this.http.request(req);
+
+
+  uploadFile(form_data: any,){
+     return new Promise((exito, fallo) => {
+        const URL = "http://188.166.96.154/backend.tesis.jk/Evidencia/actualizarEvidencia" || location.hostname;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', URL, true)
+            xhr.onreadystatechange = () => {
+            xhr.readyState === 4
+              ? xhr.status === 200
+                ? (exito(JSON.parse(xhr.response)), console.log(JSON.parse(xhr.response), 'exito'))
+                : (fallo(xhr.response), console.log(JSON.parse(xhr.response), 'falllo'))
+              : ' '
+          }; 
+        xhr.send(form_data)
+      });
+    
   }
 
-  //Metodo para Obtener los archivos
-  getFiles(){
-    return this.http.get(`${this.baseUrl}/files`);
+  displayAlertDialog(options?: any){
+    let global_options = {
+      autoFocus: false,
+      panelClass: 'modhyobitto-dialog-container',
+      scrollStrategy: this.overlay.scrollStrategies.noop()
+    };
+    let dialog_config = {...global_options, ...options};
+    let dialog_ref = this.dialog.open(
+      ModalDialodErrorComponent,
+      dialog_config
+    );
+    return dialog_ref;
   }
 
-  //Metodo para borrar los archivos
-  deleteFile(filename: string){
-    return this.http.get(`${this.baseUrl}/delete/${filename}`);
+  scrollToElement(element_ref: any, offset = 10){
+    setTimeout(()=>{
+      let is_selector = (typeof element_ref) == 'string';
+      let element = (is_selector)? document.querySelector(element_ref) : element_ref;
+      let scroll_extent = element.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo(0, scroll_extent);
+    }, 200);
   }
 
+  unsubscribeAll(subs: any[]){
+    let sub_count = subs.length;
+    for(let i=0; i < sub_count; i++){
+      let current_sub = subs[i];
+      if(!!current_sub){
+        current_sub.unsubscribe();
+      }
+    }
+  }
+
+ 
 }

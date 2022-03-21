@@ -15,6 +15,8 @@ import { MaterialModule } from './material/material-module';
 import { PaginaModule } from './pagina/pagina.module';
 import { PaginaComponent } from './pagina/pagina.component';
 import { ServicioModule } from './servicios/servicios.module';
+import { AdmininistradorGuard } from './guards/administrador.guard';
+import { DirectivasModule } from './directivas/directivas.module';
 
 
 @NgModule({
@@ -35,11 +37,11 @@ import { ServicioModule } from './servicios/servicios.module';
     FlexLayoutModule,
     ReactiveFormsModule,
     IconModule,
-
+    DirectivasModule,
     // Vex
     VexModule,
   ],
-  providers: [],
+  providers: [AdmininistradorGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

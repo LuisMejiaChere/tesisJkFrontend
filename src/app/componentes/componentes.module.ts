@@ -8,6 +8,10 @@ import { ModalActualizarPeriodoComponent } from "./modal-actualizar-periodo/moda
 import { ModalActualizarSubcriterioComponent } from "./modal-actualizar-subcriterio/modal-actualizar-subcriterio.component";
 import { ModalActualizarIndicadorComponent } from "./modal-actualizar-indicador/modal-actualizar-indicador.component";
 import { ModalActualizarModeloCarreraComponent } from './modal-actualizar-modelo-carrera/modal-actualizar-modelo-carrera.component';
+import { ModalActualizarEvidenciaComponent } from "./modal-actualizar-evidencia/modal-actualizar-evidencia.component";
+import { ModalDialodErrorComponent } from "./modal-dialog-error/modal-dialog-error.component";
+import { DirectivasModule } from "../directivas/directivas.module";
+import { ArrastrarYSoltarDirective } from "../directivas/arrastrar-y-soltar-directive/arrastrar-y-soltar.directive";
 
 
 @NgModule({
@@ -16,8 +20,11 @@ import { ModalActualizarModeloCarreraComponent } from './modal-actualizar-modelo
     ModalActualizarPeriodoComponent,
     ModalActualizarSubcriterioComponent,
     ModalActualizarIndicadorComponent,
-    ModalActualizarIndicadorComponent,
     ModalActualizarModeloCarreraComponent,
+    ModalActualizarEvidenciaComponent,
+    ModalDialodErrorComponent,
+    
+    ArrastrarYSoltarDirective
     
   ],
   entryComponents: [
@@ -25,6 +32,11 @@ import { ModalActualizarModeloCarreraComponent } from './modal-actualizar-modelo
     ModalActualizarPeriodoComponent,
     ModalActualizarSubcriterioComponent,
     ModalActualizarIndicadorComponent,
+    ModalActualizarModeloCarreraComponent,
+    ModalActualizarEvidenciaComponent,
+    ModalDialodErrorComponent,
+    
+    ArrastrarYSoltarDirective
     
   ],
   imports: [
@@ -32,13 +44,18 @@ import { ModalActualizarModeloCarreraComponent } from './modal-actualizar-modelo
     CommonModule,
     MaterialModule,
     FormsModule,
-    IconModule,
+    IconModule
   ],
   exports: [
     ModalActualizarCriterioComponent,
     ModalActualizarPeriodoComponent,
     ModalActualizarSubcriterioComponent,
     ModalActualizarIndicadorComponent,
+    ModalActualizarModeloCarreraComponent,
+    ModalActualizarEvidenciaComponent,
+    ModalDialodErrorComponent,
+    
+    ArrastrarYSoltarDirective
     
   ],
 })

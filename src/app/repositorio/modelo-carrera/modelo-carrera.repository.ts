@@ -16,6 +16,7 @@ import { ModeloCarrera } from 'src/app/modelos/modelo-carrera/modelo-carrera.mod
 export class ModeloCarreraRepository {
     modeloCarrera: ModeloCarrera[] =[];
     datosEmitir = new BehaviorSubject('first');
+    evidencias: any
 
     constructor(private http: HttpClient, private url: UrlService, private ruta: Router, private notificacion: MensajeService) {}
 
@@ -26,9 +27,9 @@ export class ModeloCarreraRepository {
 
     obtenerModeloCarreraFecth() {
         this.url.obtenerModeloCarrera().subscribe((data: ModeloCarreraRespuesta) => {
-            if (data.ok) {
+            if (data.estado) {
                 this.modeloCarrera = data.datos;   
-                console.log( data.datos);             
+              
             } else {
                 this.notificacion.openSnackBar(data.observacion);
                 // this.usuarioRepo.logout();
@@ -41,16 +42,19 @@ export class ModeloCarreraRepository {
         });
     }
 
-
-
     get obtenerModelosCarreras() {
         return this.modeloCarrera;
+    }
+
+
+    get evidenciasModelosCarreras() {
+        return this.evidencias;
     }
 
     registrarModeloCarrera(data: ModeloCarrera) {
         return this.url.registrarModeloCarrera(data).pipe(
             map((data: ModeloCarreraRespuesta) => {
-                data.ok ? this.modeloCarrera.unshift(data.datos) : '';
+                data.estado ? this.modeloCarrera.unshift(data.datos[0]) : '';
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));
@@ -61,13 +65,35 @@ export class ModeloCarreraRepository {
             map((data: ModeloCarreraRespuesta) => {
                 console.log(data);
                 
-                data.ok ? 
-                this.modeloCarrera.splice(this.modeloCarrera.findIndex(p => p.id_modelo === data.datos.id_modelo), 1, data.datos) : ''
+                data.estado ? 
+                this.modeloCarrera.splice(this.modeloCarrera.findIndex(p => p.id === data.datos[0].id), 1, data.datos[0]) : ''
                 this.datosEmitir.next('second');
                 return this.vistaComponente(data);
             }));
 
     }
+
+    buscarEvidenciaModeloCarrerabyId(data: any) {
+        return this.url.buscarEvidenciaModeloCarrerabyId(data).pipe(
+            map((data: any) => {
+                data.estado ? 
+                this.evidencias = data: '';
+                return this.evidencias
+            }));
+
+    }
+
+    eliminarEvidenciaModeloCarrerabyId(data: any) {
+        return this.url.eliminarEvidenciaModeloCarrerabyId(data).pipe(
+            map((data: any) => {
+                data.estado ? 
+                this.evidencias = data: '';
+                return this.evidencias
+            }));
+
+    }
+
+    
 
    
 

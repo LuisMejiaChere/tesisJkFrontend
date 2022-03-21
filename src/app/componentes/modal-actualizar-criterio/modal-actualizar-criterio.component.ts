@@ -27,8 +27,6 @@ export class ModalActualizarCriterioComponent {
     this.accion = obj.accion;
     this.dataCriterio = this.fabrica(obj.data);
     this.dataCriterio.estado === "1" ? this.isChecked:this.isChecked=false;
-    console.log('constrctr', this.dataCriterio.estado);
-    
   }
   
   fabrica(data = {}) {

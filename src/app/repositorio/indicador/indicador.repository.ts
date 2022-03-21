@@ -32,7 +32,7 @@ export class IndicadorRepository {
   obtenerIndicadorFecth() {
     this.url.obtenerIndicador().subscribe(
       (data: IndicadorRespuesta) => {
-        if (data.ok) {
+        if (data.estado) {
           console.log(data);
           
           this.indicador = data.datos;
@@ -54,7 +54,7 @@ export class IndicadorRepository {
   obtenerIndicadorActivoFecth() {
     this.url.obtenerIndicadorActivos().subscribe(
       (data: IndicadorRespuesta) => {
-        if (data.ok) {
+        if (data.estado) {
           this.indicadorActivo = data.datos;
         } else {
           this.notificacion.openSnackBar(data.observacion);
@@ -81,7 +81,7 @@ export class IndicadorRepository {
   registrarIndicador(data: Indicador) {
     return this.url.registrarIndicador(data).pipe(
       map((data: IndicadorRespuesta) => {
-        data.ok ? this.indicador.unshift(data.datos) : "";
+        data.estado ? this.indicador.unshift(data.datos) : "";
         this.datosEmitir.next("second");
         return this.vistaComponente(data);
       })
@@ -92,10 +92,10 @@ export class IndicadorRepository {
     return this.url.modificarIndicador(data).pipe(
       map((data: IndicadorRespuesta) => {
         console.log(data);
-        data.ok
+        data.estado
           ? this.indicador.splice(
               this.indicador.findIndex(
-                (p) => p.id_indicador === data.datos.id_indicador
+                (p) => p.id === data.datos.id
               ),
               1,
               data.datos

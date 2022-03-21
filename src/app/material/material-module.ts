@@ -26,6 +26,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import {MatGridListModule} from '@angular/material/grid-list';
 
@@ -60,7 +61,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
         MatSlideToggleModule,
         MatSortModule,
         MatAutocompleteModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatExpansionModule
     ],
     exports: [
         MatSortModule,
@@ -89,7 +91,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
         MatTooltipModule,
         MatPaginatorModule,
         MatAutocompleteModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatExpansionModule
     ],
 })
 export class MaterialModule { }

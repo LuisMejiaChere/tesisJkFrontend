@@ -31,15 +31,13 @@ export class ModalActualizarIndicadorComponent {
   ) {
     dialogRef.disableClose = true;
     this.accion = obj.accion;
-    // console.log(obj);
-    if(this.accion === 'Modificar'){
-      this.dataIndicador = obj.valor;
-    }else{
-      this.dataIndicador = obj.data;
-    }
+    this.dataIndicador = this.fabrica(obj.data);
     this.dataIndicador.estado === "1" ? this.isChecked :this.isChecked=false;
   }
 
+  fabrica(data = {}) {
+    return (Object.values(data)).length === 0 ? new Indicador() : { ...data };
+  }
 
   get getmostrar() {
     return JSON.stringify(this.dataIndicador);
@@ -53,21 +51,22 @@ export class ModalActualizarIndicadorComponent {
     this.formularioEnviado = true;
     if (form.valid) {
       this.bloquearBoton = true;
-      const data = { ...this.getDatos() };
+      const data = { ...this.dataIndicador };
+      data.estado = this.dataIndicador.estado? "1":"0";
       this.close.emit({ accion: this.accion, data });
     }
     this.bloquearBoton = false;
   }
 
-  getDatos(): Indicador {
-    const flag = this.dataIndicador.estado ? "1":"0";
-    return {
-      id_indicador: this.dataIndicador.id_indicador,
-      id_tipo: this.dataIndicador.id_tipo,
-      indicador: this.dataIndicador.indicador,
-      descripcion: this.dataIndicador.descripcion,
-      estado: flag,
-    };
-  }
-  ge
+  // getDatos(): Indicador {
+  //   const flag = this.dataIndicador.estado ? "1":"0";
+  //   return {
+  //     id_indicador: this.dataIndicador.id_indicador,
+  //     id_tipo: this.dataIndicador.id_tipo,
+  //     indicador: this.dataIndicador.indicador,
+  //     descripcion: this.dataIndicador.descripcion,
+  //     estado: flag,
+  //   };
+  // }
+  // ge
 }

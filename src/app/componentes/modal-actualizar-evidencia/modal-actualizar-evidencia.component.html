@@ -1,0 +1,124 @@
+<!-- <form class="example-form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)"> -->
+  <h2 mat-dialog-title>{{accion}} evidencias </h2>
+  <!-- {{getmostrar}} -->
+  <mat-dialog-content class="mat-typography">
+    <div class="row g-0 justify-content-around mt-5">
+       
+      <!-- <app-upload-file [config]="file_upload_config" ></app-upload-file> -->
+      <div class="modhyobitto-file-uploader"  (onFileDropped)="selectFiles($event)">
+        <mat-list role="list">
+            <mat-chip-list >
+                <mat-chip *ngFor="let archivo of archivos" (removed)="clickQuitarArchivo(archivo?.id)">
+                    <a href="http://188.166.96.154/backend.tesis.jk/docs/{{archivo?.ruta}}" target="_blank">{{archivo?.ruta}}</a> 
+                    <button matChipRemove style="margin-top: -5px;">
+                        <mat-icon mat-list-icon [icIcon]="icDelete"  style="cursor:pointer;"></mat-icon>
+                      </button>
+                </mat-chip>
+              </mat-chip-list>
+              <br>
+            <!-- <mat-list-item >
+              <mat-icon mat-list-icon [icIcon]="icDelete"  style="cursor:pointer;"></mat-icon>
+              <div mat-line> <a href=""></a> </div>
+            </mat-list-item> -->
+          </mat-list>
+        <div class="file-uploader__instructions">
+            Haga clic en "Examinar archivos".
+        </div>
+        <div class="files-for-upload">
+            <mat-expansion-panel 
+                *ngFor="let selected_file of selected_files; index as i"
+                class="selected-file" hideToggle disabled
+                expanded="{{!!selected_file.upload_result}}">
+                <mat-expansion-panel-header>
+                    <div class="selected-file__header">
+                        <div class="selected-file__name">
+                            {{selected_file.file.name}}
+                        </div>
+                        <div class="selected-file__actions">
+                            <button 
+                                matRipple
+                                class="selected_file__upload primary-button"
+                                matTooltip="Subir"
+                                matTooltipPosition="left"
+                                aria-label="Upload File"
+                                (click)="uploadFile(i)"
+                                [disabled]="selected_file.is_upload_in_progress || selected_file.upload_result=='success'">
+                                <!-- <span *ngIf="selected_file.upload_result!='success'"
+                                    aria-hidden="true" class="material-icons">file_upload</span> -->
+                                    <mat-icon *ngIf="selected_file.upload_result!='success'"
+                                    aria-hidden="true" [icIcon]="icFileUpload"></mat-icon>
+                                <span *ngIf="selected_file.upload_result=='success'"
+                                    aria-hidden="true" class="material-icons">check</span>
+                            </button>
+                            <button 
+                                matRipple
+                                class="selected_file__cancel secondary-button"
+                                matTooltip="Cancelar"
+                                matTooltipPosition="left"
+                                aria-label="Cancel File"
+                                (click)="inititateFileCancel(i)">
+                                <mat-icon [icIcon]="icClear"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <mat-progress-bar *ngIf="selected_file.is_upload_in_progress" mode="indeterminate"></mat-progress-bar>
+                </mat-expansion-panel-header>
+                <div *ngIf="selected_file.upload_result=='success'"
+                    class="selected-file__upload-result">
+                    El archivo se cargó con éxito.
+                </div>
+                <div *ngIf="!!selected_file.upload_result && selected_file.upload_result!='success'"
+                    class="selected-file__upload--error">
+                    {{selected_file.upload_result}}
+                </div>
+            </mat-expansion-panel>
+        </div>
+        <div class="file-upload__options">
+            <form ENCTYPE="multipart/form-data"
+                class="file-upload__native-selection"
+                [formGroup]="file_selection_form">
+                <input type="file" #fileSelector
+                    formControlName="file_selection"
+                    [accept]="file_upload_config.MIME_types_accepted"
+                    multiple="{{file_upload_config.is_multiple_selection_allowed}}">
+            </form>
+            <button 
+            matRipple
+            class="file-upload__browse primary-button"
+            (click)="openFileSelector()">
+            Examinar archivos
+            </button>
+            <ng-container *ngIf="selected_files.length>1">
+                <button 
+                    matRipple
+                    class="all_file__upload primary-button"
+                    matTooltip="Subir todos"
+                    matTooltipPosition="above"
+                    aria-label="Upload All Files"
+                    (click)="uploadAll()"
+                    [disabled]="!isAnyFileNotUploaded()">
+                    <mat-icon aria-hidden="true" [icIcon]="icFileUpload"></mat-icon>
+                    
+                </button>
+                <button 
+                    matRipple
+                    class="all_file__cancel secondary-button"
+                    matTooltip="Cancelar todos"
+                    matTooltipPosition="above"
+                    aria-label="Cancel All Files"
+                    (click)="initiateCancelAll()">
+    
+                    <mat-icon aria-hidden="true" [icIcon]="icClear"></mat-icon>
+                 
+                </button>
+            </ng-container>
+        </div>
+    </div>
+    </div>
+  </mat-dialog-content>
+ 
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="cerrarModal()">Cancelar</button>
+    <!-- <button mat-button color="accent" cdkFocusInitial type="submit">{{accion}}</button> -->
+  </mat-dialog-actions>
+<!-- </form> -->
