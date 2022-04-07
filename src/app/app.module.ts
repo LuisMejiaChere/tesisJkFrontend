@@ -12,8 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconModule } from '@visurel/iconify-angular';
 import { MaterialModule } from './material/material-module';
-import { PaginaModule } from './pagina/pagina.module';
-import { PaginaComponent } from './pagina/pagina.component';
+
 import { ServicioModule } from './servicios/servicios.module';
 import { AdmininistradorGuard } from './guards/administrador.guard';
 import { DirectivasModule } from './directivas/directivas.module';

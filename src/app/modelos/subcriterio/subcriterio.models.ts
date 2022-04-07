@@ -4,6 +4,7 @@ export class Subcriterio {
         public subcriterio?: string,
         public estado?: string,
         public criterioid?: number,
+        public criterio?: string,
     ) { 
         this.estado = '0';
     }

@@ -5,14 +5,23 @@ import { MatTable } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-
+import { map } from 'rxjs/operators';
 import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icAttachFile from '@iconify/icons-ic/twotone-attach-file';
+import icFolderZip from '@iconify/icons-ic/twotone-folder-zip';
+
+import faFilePdf from '@iconify/icons-fa-solid/file-pdf';
+import faFileXls from '@iconify/icons-fa-solid/file-excel'
 
 
 import icSearch from '@iconify/icons-ic/twotone-search';
+import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
+import icImportExport from '@iconify/icons-ic/twotone-import-export';
+
+
+
 import icbaselinetextsnippet from '@iconify/icons-ic/baseline-text-snippet';
 
 import { MensajeService } from 'src/app/servicios/mensajes/mensaje.service';
@@ -21,10 +30,25 @@ import { ModeloCarreraRepository } from 'src/app/repositorio/modelo-carrera/mode
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ModeloCarrera } from 'src/app/modelos/modelo-carrera/modelo-carrera.models';
 
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+
 import { ModalActualizarEvidenciaComponent } from 'src/app/componentes/modal-actualizar-evidencia/modal-actualizar-evidencia.component';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+import { PageReference, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
+import { ITable } from 'pdfmake-wrapper/lib/interfaces';
+import * as pdfFonts from "pdfmake/build/vfs_fonts"; 
+import * as XLSX from 'xlsx/dist/xlsx.full.min.js';
+import { UrlService } from 'src/app/servicios/url/url.service';
+import { HttpClient, HttpEvent, HttpHeaderResponse, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
+
+
+
+// Set the fonts to use
+PdfMakeWrapper.setFonts(pdfFonts);
 
 
 @Component({
@@ -43,6 +67,8 @@ export class ModeloCarreraComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+
   dialogRef: MatDialogRef<ModalActualizarModeloCarreraComponent, any>;
   dialogRefEvidencia: MatDialogRef<ModalActualizarEvidenciaComponent, any>;
   columnsToDisplay : string[] =  ['num', 'elementoFundamental','estado', 'action'];
@@ -50,10 +76,15 @@ export class ModeloCarreraComponent implements OnInit {
   expandedElement: any | null;
   dataSource = null;
   icSearch = icSearch;
+  icImportExport = icImportExport;
+  icArrowDropDown =icArrowDropDown;
+  faFilePdf = faFilePdf;
+  faFileXls = faFileXls;
   icAttachFile = icAttachFile;
   icMoreVert = icMoreVert;
   icDelete = icDelete;
   icEdit = icEdit;
+  icFolderZip = icFolderZip;
   icbaselinetextsnippet = icbaselinetextsnippet;
   datosCargados = false;
   isDisabled = false;
@@ -61,10 +92,9 @@ export class ModeloCarreraComponent implements OnInit {
   dialogSubmitSubscription: any;
   searchCtrl = new FormControl();
 
-
-
-  constructor(public dialog: MatDialog, private snack: MensajeService, public modeloCarreraRepo: ModeloCarreraRepository) {
+  constructor(private http: HttpClient, public urlService:UrlService, public dialog: MatDialog, private snack: MensajeService, public modeloCarreraRepo: ModeloCarreraRepository) {
     this.modeloCarreraRepo.obtenerModeloCarreraFecth();
+    this.modeloCarreraRepo.obtenerModeloCarreraActivoFecth()
   }
   ngOnInit(): void {
     this.obtenerData()
@@ -111,9 +141,6 @@ export class ModeloCarreraComponent implements OnInit {
 
   openDialogEvicendia(accion: string, data: ModeloCarrera) {
     this.dialogRefEvidencia = this.dialog.open(ModalActualizarEvidenciaComponent, {
-      // height: '1024px',
-      // width: '1024px',
-    
       data: { accion, data },
     });
 
@@ -151,11 +178,15 @@ export class ModeloCarreraComponent implements OnInit {
 
 
   controlador = (data: any) => {
+   
     if (data.ok) {
       this.table.renderRows();
+      this.modeloCarreraRepo.obtenerModeloCarreraActivoFecth()
     }
     this.snack.openSnackBar(data.mensaje);
     this.dialogRef.close();
+    this.modeloCarreraRepo.obtenerModeloCarreraActivoFecth()
+    
   }
   
   errores = (data: any) => {
@@ -163,80 +194,151 @@ export class ModeloCarreraComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  createPDF(data) {
-    
-    const pdfDefinition: any = {
-      pageSize: 'A4',
-      pageOrientation: 'landscape',
-      footer: function (currentPage, pageCount) { 
-        return [currentPage.toString() + ' de ' + pageCount] 
-      },
-      header: function (currentPage, pageCount, pageSize) {
-        // you can apply any logic and return any valid pdfmake element
 
-        return [
-          { text: 'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador', style: 'sectionHeader', bold: true, alignment: 'center' },
-          { canvas: [{ type: 'rect', x: 170, y: 2, w: pageSize.width - 170, h: 40 }] }
-        ]
-      },
-      defaultStyle: {  
-        sectionHeader: {  
-            bold: true,  
-            decoration: 'underline',  
-            fontSize: 14,  
-            margin: [0, 15, 0, 15]  
-        }  
-      } ,
-      content: [
-        {
-          pageMargins: [40, 60, 40, 60],
-          table: {
-            headerRows: 1,
-            body: [
-              [{ text: 'Criterio', bold: true }, { text: 'Subcriterio', bold: true }, { text: 'Indicadores', bold: true }, { text: 'Tipo', bold: true }, { text: 'Descripción estándar del indicador', bold: true }, { text: 'Elemento fundamental', bold: true }, { text: 'Evidencias', bold: true }],
-              [data.criterio, data.subcriterio, data.indicador, data.tipo, data.descripcion, data.elemento_fundamental, true],
-            ]
-          }
-        }
-      ]
-    };
+  async crearReporte(){
+    const pdf = new PdfMakeWrapper();
+    const data =  await this.fetchData();
+    if (this.extraerData(data).length > 0) {
+      this.configPdf(pdf)
+      pdf.add(this.createFilas(data)); 
+      pdf.create().open();
+      this.snack.openSnackBar('Reporte de modelos de carrera creado correctamente.');
+  } else {
+     this.snack.openSnackBar('No se encontraron registros');
+  }
+  }
 
-    /*
-    const pdfDefinition: any = {
-      content: [
-        {
-          text: 'Hola mundo',
-        }
-      ]
-    };*/
+  createFilas(data: any):ITable{
+    return new Table([
+      ['ID', 'CRITERIO', 'SUBCRITERIO', 'N DE INDICADOR', 'INDICADORES', 'TIPO', 'DESCRIPCIÓN ESTANDAR DEL INDICADOR', 'ELEMENTO FUNDAMENTAL'],
+      ...this.extraerData(data)
+    ])
+    .layout({
+      fillColor:(rowIndex: number, node:any, columnIndex: number)=>{
+        return rowIndex === 0 ? '#CCCCCC': '';
+      }})
+    .end
+  }
 
-    const tableLayouts = {
-      exampleLayout: {
-        hLineWidth: function (i, node) {
-          if (i === 0 || i === node.table.body.length) {
-            return 0;
-          }
-          return (i === node.table.headerRows) ? 2 : 1;
-        },
-        vLineWidth: function (i) {
-          return 0;
-        },
-        hLineColor: function (i) {
-          return i === 1 ? 'black' : '#aaa';
-        },
-        paddingLeft: function (i) {
-          return i === 0 ? 0 : 8;
-        },
-        paddingRight: function (i, node) {
-          return (i === node.table.widths.length - 1) ? 0 : 8;
-        }
-      }
-    };
+  extraerData(data:any): any{
+    return data.map(row =>[row.id, row.criterio, row.subcriterio, row.indicadorid, row.indicador, row.tipo, row.descripcion, row.elementofundamental])
+  }
 
-    
-    const pdf = pdfMake.createPdf(pdfDefinition, tableLayouts);
-    pdf.open();
+   fetchData(){
+    this.modeloCarreraRepo.obtenerModeloCarreraActivoFecth()
+    const data = this.modeloCarreraRepo.obtenerModelosCarrerasActivo
+    return data
+  }
+
+  configPdf(pdf){
+    pdf.header({text:'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador', bold: true, alignment: 'center', italics: true, margin: [ 5, 10, 10, 20 ]  })
+    pdf.pageOrientation('landscape'); // 'portrait'
+    pdf.pageSize('A4');
+    pdf.info({
+      title: 'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador',
+      author: 'Facultad de Ciencias Informatcas',
+  });
+  pdf.watermark( new Txt('marca de agua con color azul').color('blue').end );
 
   }
+
+  
+async excel(){
+  this.modeloCarreraRepo.obtenerModeloCarreraActivoFecth()
+  const data = this.modeloCarreraRepo.obtenerModelosCarrerasActivo
+  if (this.extraerData(data).length > 0) {
+  const encabezados = ['ID', 'CRITERIO', 'SUBCRITERIO', 'N DE INDICADOR', 'INDICADORES', 'TIPO', 'DESCRIPCIÓN ESTANDAR DEL INDICADOR', 'ELEMENTO FUNDAMENTAL']
+  const title = 'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador';
+  const workbook = new Workbook();
+  const worksheet = workbook.addWorksheet('Modelo de carrera');
+  const titleRow = worksheet.addRow([title]);
+  titleRow.font = { name: 'Corbel', family: 4, size: 16, underline: 'double', bold: true };
+  titleRow.alignment = { vertical: 'middle', horizontal: 'center' };
+  worksheet.addRow([]);
+  worksheet.mergeCells('A1:H2');
+  worksheet.addRow([]);
+  const headerRow = worksheet.addRow(encabezados);
+      // Cell Style : Fill and Border
+    headerRow.eachCell((cell, number) => {
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFFFFF00' },
+        bgColor: { argb: 'FF0000FF' }
+      };
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+    });
+
+    XLSX.utils.json_to_sheet(this.extraerData(data), {origin: 'A2', cellStyles: true});
+
+    // Add Data and Conditional Formatting
+    this.extraerData(data).forEach(d => {
+      const row = worksheet.addRow(d);
+      const qty = row.getCell(5);
+      let color = 'FF99FF99';
+      if (+qty.value < 500) {
+        color = 'FF9999';
+      }
+    
+      qty.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: color }
+      };
+    }
+    
+    );
+    worksheet.getColumn(1).width = 5;
+    worksheet.getColumn(2).width = 40;
+    worksheet.getColumn(3).width = 25;
+    worksheet.getColumn(4).width = 15;
+    worksheet.getColumn(5).width = 40;
+    worksheet.getColumn(6).width = 15;
+    worksheet.getColumn(7).width = 40;
+    worksheet.getColumn(8).width = 40;
+    worksheet.addRow([]);
+
+
+// Footer Row
+    const footerRow = worksheet.addRow(['Esta es una hoja de Excel generada por el sistema.']);
+    footerRow.getCell(1).fill = {
+  type: 'pattern',
+  pattern: 'solid',
+  fgColor: { argb: 'FFCCFFE5' }
+};
+    footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+
+// Merge Cells
+    worksheet.mergeCells(`A${footerRow.number}:H${footerRow.number}`);
+
+
+  workbook.xlsx.writeBuffer().then((data: any) => {
+    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    fs.saveAs(blob, 'Modelo_Autoevaluación_de_Carrera.xlsx');
+  });
+  this.snack.openSnackBar('Reporte de modelos de carrera creado correctamente.');
+  } else {
+    this.snack.openSnackBar('No se encontraron registros');
+  }
+
+}
+
+
+
+
+crearComprimido(id) {
+
+  this.urlService.obtenerEvidenciasModeloCarrerabyId(id).subscribe((res:any)=>{
+    if(res.estado){
+      // Evidencia/evidencias_comprimir_zip?id=${data.id}
+      const url = `http://188.166.96.154/backend.tesis.jk/docs/comprimidos/${res.datos.ruta}`
+      // window.open(url);
+      window.saveAs(url);
+    }
+    console.log(res);
+    
+  })
+  
+}
 
 }

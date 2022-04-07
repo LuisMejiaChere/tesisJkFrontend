@@ -76,8 +76,6 @@ export class CriterioRepository {
     modificarCriterio(data: Criterio) {
         return this.url.modificarCriterio(data).pipe(
             map((data: CriterioRespuesta) => {
-                console.log(data);
-                
                 data.estado ? 
                 this.criterio.splice(this.criterio.findIndex(p => p.id === data.datos.id), 1, data.datos) : ''
                 this.datosEmitir.next('second');

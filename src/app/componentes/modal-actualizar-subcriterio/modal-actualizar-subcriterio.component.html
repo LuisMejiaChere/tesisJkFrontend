@@ -16,9 +16,13 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Criterio</mat-label>
         <mat-select required name="id_criterio" #id_criterio="ngModel" [(ngModel)]="dataSubcriterio.criterioid">
+          <mat-option disabled [value]="dataSubcriterio.criterioid">
+           {{dataSubcriterio.criterio}}
+          </mat-option>
           <mat-option disabled *ngIf="criterioRepo?.obtenerCriteriosActivos?.length === 0" value="{nombre:'noVale'}">
             Seleccionar:
           </mat-option>
+         
           <mat-option *ngFor="let item of criterioRepo.obtenerCriteriosActivos" [value]="item.id">
             {{item.criterio}}
           </mat-option>

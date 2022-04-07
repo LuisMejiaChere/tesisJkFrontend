@@ -33,8 +33,6 @@ export class IndicadorRepository {
     this.url.obtenerIndicador().subscribe(
       (data: IndicadorRespuesta) => {
         if (data.estado) {
-          console.log(data);
-          
           this.indicador = data.datos;
         } else {
           this.notificacion.openSnackBar(data.observacion);
@@ -91,7 +89,6 @@ export class IndicadorRepository {
   modificarIndicador(data: Indicador) {
     return this.url.modificarIndicador(data).pipe(
       map((data: IndicadorRespuesta) => {
-        console.log(data);
         data.estado
           ? this.indicador.splice(
               this.indicador.findIndex(

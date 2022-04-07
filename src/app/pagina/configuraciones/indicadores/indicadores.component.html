@@ -67,21 +67,12 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="action" stickyEnd>
-        <th mat-header-cell *matHeaderCellDef> <b></b> </th>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> <b>Acción</b> </th>
         <td mat-cell *matCellDef="let element" style="width: 50px !important;">
-          <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
-            <mat-icon [icIcon]="icMoreVert"></mat-icon>
+          <button mat-icon-button (click)="openDialog('Modificar',element)">  
+            <mat-icon [icIcon]="icEdit"></mat-icon>
           </button>
-          <mat-menu #beforeMenu="matMenu" xPosition="before">
-            <button mat-menu-item (click)="openDialog('Modificar',element)"><span>
-                <mat-icon [icIcon]="icEdit"></mat-icon>Modificar
-              </span></button>
-            <button mat-menu-item (click)="openDialog('Eliminar',element)"><span>
-                <mat-icon [icIcon]="icDelete"></mat-icon>Eliminar
-              </span>
-            </button>
-          </mat-menu>
         </td>
       </ng-container>
 

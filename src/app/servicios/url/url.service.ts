@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -39,7 +39,7 @@ export class UrlService {
     this.url = "http://188.166.96.154/backend.tesis.jk/"
     // this.url = "https://backend-tesis-jk.000webhostapp.com/"
   }
-
+  
   private getOptions() {
     return {
       headers: new HttpHeaders({
@@ -230,6 +230,13 @@ export class UrlService {
     );
   }
 
+   // Modelo carrera
+   obtenerModeloCarreraActivo(): Observable<ModeloCarreraRespuesta> {
+    return this.http.get<ModeloCarreraRespuesta>(
+      this.url + "Modelo_carrera/seleccionar_modelo_carreras_activo"
+    );
+  }
+
   registrarModeloCarrera(
     data: ModeloCarrera
   ): Observable<ModeloCarreraRespuesta> {
@@ -270,7 +277,24 @@ export class UrlService {
     );
   }
 
+  obtenerEvidenciasModeloCarrerabyId(
+    data: any
+  ): Observable<any> {
+    data = {id:data} 
+    return this.http.get(this.url + `Evidencia/evidencias_comprimir_zip?id=${data.id}`,
+    data
+    );
+  }
 
+
+
+  // obtenerEvidenciasModeloCarrerabyId(data: any){
+  //   data = {id:data} 
+  //   return this.http.get<Blob>(this.url + `Evidencia/evidencias_comprimir_zip?id=${data.id}`, 
+  //   {responseType: 'blob' as 'json',
+  //   observe: 'response' as 'body'}
+  //   );
+  // }
  
 
 }

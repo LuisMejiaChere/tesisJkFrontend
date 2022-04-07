@@ -30,7 +30,9 @@ export class ModalActualizarSubcriterioComponent {
   }
 
    ngOnInit(): void {
-     this.criterioRepo.obtenerCriterioActivoFecth();  }
+     this.criterioRepo.obtenerCriterioActivoFecth();  
+     this.criterioRepo.obtenerCriterioFecth();  
+    }
   
   fabrica(data = {}) {
     return (Object.values(data)).length === 0 ? new Subcriterio() : { ...data };

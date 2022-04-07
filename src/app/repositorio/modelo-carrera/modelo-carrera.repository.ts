@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UrlService } from 'src/app/servicios/url/url.service';
 import { MensajeService } from 'src/app/servicios/mensajes/mensaje.service';
 import { ModeloCarreraRespuesta } from 'src/app/interface/interfaces.interface';
@@ -15,6 +15,8 @@ import { ModeloCarrera } from 'src/app/modelos/modelo-carrera/modelo-carrera.mod
 
 export class ModeloCarreraRepository {
     modeloCarrera: ModeloCarrera[] =[];
+    evidenciasZip: any;
+    modeloCarreraActivo: ModeloCarrera[] =[];
     datosEmitir = new BehaviorSubject('first');
     evidencias: any
 
@@ -29,21 +31,36 @@ export class ModeloCarreraRepository {
         this.url.obtenerModeloCarrera().subscribe((data: ModeloCarreraRespuesta) => {
             if (data.estado) {
                 this.modeloCarrera = data.datos;   
-              
             } else {
                 this.notificacion.openSnackBar(data.observacion);
-                // this.usuarioRepo.logout();
             }
             this.datosEmitir.next('second');
         }, error => {
             this.datosEmitir.next('second');
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-            // this.usuarioRepo.logout();
         });
+    }
+
+    obtenerModeloCarreraActivoFecth() {
+        this.url.obtenerModeloCarreraActivo().subscribe((data: ModeloCarreraRespuesta) => {
+            if (data.estado) {
+              this.modeloCarreraActivo = data.datos;   
+            } else {
+              this.notificacion.openSnackBar(data.observacion);
+            }
+            this.datosEmitir.next('second');
+        }, error => {
+            this.datosEmitir.next('second');
+            this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+        });   
     }
 
     get obtenerModelosCarreras() {
         return this.modeloCarrera;
+    }
+
+    get obtenerModelosCarrerasActivo() {
+        return this.modeloCarreraActivo;
     }
 
 
@@ -63,8 +80,6 @@ export class ModeloCarreraRepository {
     modificarModeloCarrera(data: ModeloCarrera) {
         return this.url.modificarModeloCarrera(data).pipe(
             map((data: ModeloCarreraRespuesta) => {
-                console.log(data);
-                
                 data.estado ? 
                 this.modeloCarrera.splice(this.modeloCarrera.findIndex(p => p.id === data.datos[0].id), 1, data.datos[0]) : ''
                 this.datosEmitir.next('second');
@@ -93,7 +108,7 @@ export class ModeloCarreraRepository {
 
     }
 
-    
+
 
    
 

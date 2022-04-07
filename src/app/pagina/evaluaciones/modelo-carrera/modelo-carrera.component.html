@@ -20,6 +20,12 @@
     <button class="ml-4" fxFlex="none" fxHide.gt-xs mat-icon-button type="button">
       <mat-icon [icIcon]="icSearch"></mat-icon>
     </button>
+    <span fxFlex></span>
+    <button mat-button [matMenuTriggerFor]="menu"> <mat-icon [icIcon]="icImportExport"></mat-icon> Exportar <mat-icon [icIcon]="icArrowDropDown"></mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="crearReporte()">Exportar a PDF</button>
+      <button mat-menu-item (click)="excel()">Exportar a Excel</button>
+    </mat-menu>
   </div>
   <div class="spinner-container" *ngIf="datosCargados === false">
     <mat-spinner></mat-spinner>
@@ -32,7 +38,7 @@
        class="mat-elevation-z8">
        <ng-container matColumnDef="num">
         <th mat-header-cell *matHeaderCellDef mat-sort-heade style="width: 10px;"> <b>#</b> </th>
-        <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{ i + 1 }} </td>
       </ng-container>
       <ng-container matColumnDef="elementoFundamental">
         <th mat-header-cell *matHeaderCellDef > <b>Elemento Fundamental</b></th>
@@ -72,6 +78,13 @@
               <mat-icon [icIcon]="icbaselinetextsnippet"></mat-icon>Evidencias
             </span>
           </button>
+          <button mat-menu-item (click)="crearComprimido(element.id)">
+           
+              <span>
+                <mat-icon [icIcon]="icFolderZip"></mat-icon>Imprimir evidencias
+              </span>
+           
+        </button>
           </mat-menu>
         </td>
       </ng-container>
@@ -83,12 +96,16 @@
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <div class="example-element-diagram">
-          <div class="example-element-position"><b>Periodo Lectivo: </b> {{element.periodo}} </div>
-          <div class="example-element-position"><b>Criterio: </b> {{element.criterio}} </div>
-          <div class="example-element-position"><b>Subcriterio: </b> {{element.subcriterio}} </div>
-          <div class="example-element-position"><b>Indicador: </b> {{element.indicador}} </div>
-          <mat-icon matTooltip="Evidencias: {{element.totalarchivos}}" *ngIf="element.totalarchivos !== '0'" [icIcon]="icAttachFile"></mat-icon>
-          <!-- <div class="example-element-position"><b>Evidencias adjuntas: </b> {{element.totalarchivos}} </div> -->
+          <mat-list>
+            <mat-list-item><b>Periodo Lectivo: </b> &nbsp;  {{element.periodo}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><b>Criterio: </b> &nbsp;  {{element.criterio}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><b>Subcriterio: </b> &nbsp; {{element.subcriterio}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><b>Indicador: </b> &nbsp; {{element.indicador}}</mat-list-item>
+          </mat-list>
+      
         </div>
       </div>
     </td>

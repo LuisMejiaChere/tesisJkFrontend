@@ -92,8 +92,6 @@ export class SubcriterioRepository {
     modificarSubcriterio(data: Subcriterio) {
         return this.url.modificarSubcriterio(data).pipe(
             map((data: SubcriterioRespuesta) => {
-                console.log(data);
-                
                 data.estado ? 
                 this.subCriterio.splice(this.subCriterio.findIndex(p => p.id === data.datos.id), 1, data.datos) : ''
                 this.datosEmitir.next('second');
