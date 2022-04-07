@@ -33,16 +33,17 @@ import { ModeloCarrera } from 'src/app/modelos/modelo-carrera/modelo-carrera.mod
 
 import { ModalActualizarEvidenciaComponent } from 'src/app/componentes/modal-actualizar-evidencia/modal-actualizar-evidencia.component';
 
-import { PageReference, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
+import { PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import * as pdfFonts from "pdfmake/build/vfs_fonts"; 
 import * as XLSX from 'xlsx/dist/xlsx.full.min.js';
 import { UrlService } from 'src/app/servicios/url/url.service';
-import { HttpClient, HttpEvent, HttpHeaderResponse, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
-import { Workbook } from 'exceljs';
+// import {  } from 'exceljs';
+import * as Workbook from 'exceljs/dist/exceljs.min.js'
+
 import * as fs from 'file-saver';
 
 
@@ -249,7 +250,7 @@ async excel(){
   if (this.extraerData(data).length > 0) {
   const encabezados = ['ID', 'CRITERIO', 'SUBCRITERIO', 'N DE INDICADOR', 'INDICADORES', 'TIPO', 'DESCRIPCIÓN ESTANDAR DEL INDICADOR', 'ELEMENTO FUNDAMENTAL']
   const title = 'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador';
-  const workbook = new Workbook();
+  const workbook = new Workbook.Workbook();
   const worksheet = workbook.addWorksheet('Modelo de carrera');
   const titleRow = worksheet.addRow([title]);
   titleRow.font = { name: 'Corbel', family: 4, size: 16, underline: 'double', bold: true };
