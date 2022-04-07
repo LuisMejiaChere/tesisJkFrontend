@@ -1,7 +1,7 @@
 <vex-secondary-toolbar current="Evaluaciones">
   <vex-breadcrumbs [crumbs]="['Evaluación de la carrera','Modelo carrera']" class="flex-auto"></vex-breadcrumbs>
 
-  <button mat-raised-button color="primary" matTooltip="Añadir evaluación" fxFlex="none"
+  <button *ngIf="rol === '1'" mat-raised-button color="primary" matTooltip="Añadir evaluación" fxFlex="none"
     (click)="openDialog('Registrar',{})">Crear evaluación</button>
 </vex-secondary-toolbar>
 
@@ -70,7 +70,7 @@
             <mat-icon [icIcon]="icMoreVert"></mat-icon>
           </button>
           <mat-menu #beforeMenu="matMenu" xPosition="before">
-            <button mat-menu-item (click)="openDialog('Modificar',element)"><span>
+            <button *ngIf="rol === '1'"  mat-menu-item (click)="openDialog('Modificar',element)"><span>
                 <mat-icon [icIcon]="icEdit"></mat-icon>Modificar
               </span>
             </button>

@@ -92,7 +92,7 @@ export class ModeloCarreraComponent implements OnInit {
   cargando = true;
   dialogSubmitSubscription: any;
   searchCtrl = new FormControl();
-
+  rol
   constructor(private http: HttpClient, public urlService:UrlService, public dialog: MatDialog, private snack: MensajeService, public modeloCarreraRepo: ModeloCarreraRepository) {
     this.modeloCarreraRepo.obtenerModeloCarreraFecth();
     this.modeloCarreraRepo.obtenerModeloCarreraActivoFecth()
@@ -108,6 +108,7 @@ export class ModeloCarreraComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+    this.rol = JSON.parse(localStorage.getItem('usuario')).id_rol;
   }
 
   filtrar(event: Event) {
@@ -232,7 +233,7 @@ export class ModeloCarreraComponent implements OnInit {
   }
 
   configPdf(pdf){
-    pdf.header({text:'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador', bold: true, alignment: 'center', italics: true, margin: [ 5, 10, 10, 20 ]  })
+    pdf.header({text:'Modelo genérico de evaluación del entorno de aprendizaje de carreras en Ecuador', bold: true, alignment: 'center', italics: true, margin: [ 5, 10, 10, 20 ]  })
     pdf.pageOrientation('landscape'); // 'portrait'
     pdf.pageSize('A4');
     pdf.info({
@@ -249,7 +250,7 @@ async excel(){
   const data = this.modeloCarreraRepo.obtenerModelosCarrerasActivo
   if (this.extraerData(data).length > 0) {
   const encabezados = ['ID', 'CRITERIO', 'SUBCRITERIO', 'N DE INDICADOR', 'INDICADORES', 'TIPO', 'DESCRIPCIÓN ESTANDAR DEL INDICADOR', 'ELEMENTO FUNDAMENTAL']
-  const title = 'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador';
+  const title = 'Modelo genérico de evaluación del entorno de aprendizaje de carreras en Ecuador';
   const workbook = new Workbook.Workbook();
   const worksheet = workbook.addWorksheet('Modelo de carrera');
   const titleRow = worksheet.addRow([title]);
