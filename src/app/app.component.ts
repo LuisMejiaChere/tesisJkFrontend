@@ -13,6 +13,7 @@ import { SplashScreenService } from '../@vex/services/splash-screen.service';
 import { Style, StyleService } from '../@vex/services/style.service';
 import { ConfigName } from '../@vex/interfaces/config-name.model';
 import icSettings from '@iconify/icons-ic/twotone-settings';
+import icHowToReg from '@iconify/icons-ic/twotone-how-to-reg';
 import icFat from '@iconify/icons-ic/twotone-fact-check';
 
 @Component({
@@ -66,6 +67,7 @@ export class AppComponent {
       {
         type: 'subheading',
         label: 'Evaluaciones',
+        rol : ['1','2'],
         children: [
           // EVALUACIONES
           {
@@ -85,6 +87,7 @@ export class AppComponent {
       {
         type: 'subheading',
         label: 'Modulos',
+        rol : ['1', '1'],
         children: [
           // CONFIGURACIONES
           {
@@ -111,6 +114,18 @@ export class AppComponent {
                 type: 'link',
                 label: 'Indicadores',
                 route: '/principal/configuraciones/indicadores'
+              },
+            ]
+          },
+          {
+            type: 'dropdown',
+            label: 'Personal',
+            icon: icHowToReg,
+            children: [
+              {
+                type: 'link',
+                label: 'Evaluadores',
+                route: '/principal/personal/evaluadores'
               },
             ]
           },

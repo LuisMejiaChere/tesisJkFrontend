@@ -1,6 +1,8 @@
 <form class="example-form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)">
   <h2 mat-dialog-title>{{accion}} criterio </h2>
-  <!-- {{getmostrar}} -->
+  <div class="small">
+    <small>Los campos con <b>*</b> son obligatorios.</small>
+  </div>
   <mat-dialog-content class="mat-typography">
     <div *ngIf="accion !== 'Eliminar';  else elseTemplate">
       <mat-form-field appearance="outline" class="example-full-width">

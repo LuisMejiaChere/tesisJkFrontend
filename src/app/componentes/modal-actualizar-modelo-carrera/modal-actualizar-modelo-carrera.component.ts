@@ -23,15 +23,10 @@ import { ToolbarNotificationsModule } from 'src/@vex/layout/toolbar/toolbar-noti
   styleUrls: ['./modal-actualizar-modelo-carrera.component.scss']
 })
 export class ModalActualizarModeloCarreraComponent implements OnInit {
-  @ViewChild('inputFile') inputFile;
-  archivos = [];
-  archivosModificado = [];
-  archivosTodos = [];
-  archivoAux = [];
-  extensiones = ['js', 'php', 'image/gif'];
+
+
   disabled
-  public imagePath;
-  imgURL: any;
+ 
   isChecked = true;
   isEvidencias = false;
   accion: string;
@@ -83,7 +78,9 @@ export class ModalActualizarModeloCarreraComponent implements OnInit {
   
   seleccionarCriterio(data: any) {
     this.subcriterioRepo.obtenerSubcriterioId(data.value);
-    this.subcriterioRepo.obtenerSubcriterios
+    // this.subcriterioRepo.obtenerSubcriterioUnicoId
+    console.log(this.subcriterioRepo.obtenerSubcriterioUnicoId);
+    
      
   }
 

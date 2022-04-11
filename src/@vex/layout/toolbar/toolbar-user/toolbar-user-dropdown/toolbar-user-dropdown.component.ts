@@ -43,7 +43,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
       label: 'Mi perfil',
       description: 'Información personal',
       colorClass: 'text-teal',
-      route: '#'
+      route: '/principal/miperfil'
     },
     // {
     //   id: '2',
@@ -124,6 +124,10 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   close() {
     this.usuario.logout();
+    this.popoverRef.close();
+  }
+
+  closePopover(){
     this.popoverRef.close();
   }
 }

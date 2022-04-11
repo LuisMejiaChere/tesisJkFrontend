@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import icEdit from "@iconify/icons-ic/twotone-edit";
 import icDelete from "@iconify/icons-ic/twotone-delete";
 import icMoreVert from "@iconify/icons-ic/twotone-more-vert";
+import icAdd from '@iconify/icons-ic/twotone-add';
 import { IndicadorRepository } from "src/app/repositorio/indicador/indicador.repository";
 import { MensajeService } from "src/app/servicios/mensajes/mensaje.service";
 
@@ -30,6 +31,7 @@ export class IndicadoresComponent implements OnInit {
   icMoreVert = icMoreVert;
   icDelete = icDelete;
   icEdit = icEdit;
+  icAdd = icAdd;
   datosCargados = false;
   isDisabled = false;
   cargando = true;

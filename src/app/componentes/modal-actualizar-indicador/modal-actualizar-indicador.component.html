@@ -1,9 +1,9 @@
 <form class="example-form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)">
   <h2 mat-dialog-title>{{accion}} indicador </h2>
+  <div class="small">
+    <small>Los campos con <b>*</b> son obligatorios.</small>
+  </div>
   <mat-dialog-content class="mat-typography">
-    <!-- <div>
-        {{getmostrar}}
-      </div> -->
     <div *ngIf="accion !== 'Eliminar';  else elseTemplate">
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Indicador</mat-label>
@@ -22,7 +22,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Descripción estándar del indicador</mat-label>
-        <textarea rows="6" cols="120" matInput cdkFocusInitial #input name="descripcion" type="text"
+        <textarea rows="6" cols="120" matInput #input name="descripcion" type="text"
           [(ngModel)]="dataIndicador.descripcion" #descripcion="ngModel" required
           placeholder="Descripción estándar del indicador"></textarea>
       </mat-form-field>

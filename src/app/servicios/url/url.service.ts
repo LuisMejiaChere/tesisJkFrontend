@@ -16,9 +16,11 @@ import {
   SubcriterioRespuesta,
   IndicadorRespuesta,
   ModeloCarreraRespuesta,
+  EvaluadorRespuesta,
 } from "src/app/interface/interfaces.interface";
 import { ModeloCarrera } from "src/app/modelos/modelo-carrera/modelo-carrera.models";
 import  * as myGlobals  from 'src/app/globals';
+import { Evaluador } from "src/app/modelos/evaluador/evaluador.models";
 
 const PROTOCOL = "http";
 // const PORT = 3000;
@@ -230,7 +232,6 @@ export class UrlService {
     );
   }
 
-   // Modelo carrera
    obtenerModeloCarreraActivo(): Observable<ModeloCarreraRespuesta> {
     return this.http.get<ModeloCarreraRespuesta>(
       this.url + "Modelo_carrera/seleccionar_modelo_carreras_activo"
@@ -287,14 +288,36 @@ export class UrlService {
   }
 
 
+  // Evaluadores
+  obtenerEvaluadores(): Observable<EvaluadorRespuesta> {
+    return this.http.get<EvaluadorRespuesta>(
+      this.url + "Evaluador/seleccionarEvaluador"
+    );
+  }
 
-  // obtenerEvidenciasModeloCarrerabyId(data: any){
-  //   data = {id:data} 
-  //   return this.http.get<Blob>(this.url + `Evidencia/evidencias_comprimir_zip?id=${data.id}`, 
-  //   {responseType: 'blob' as 'json',
-  //   observe: 'response' as 'body'}
-  //   );
-  // }
- 
+  obtenerEvaluadoresActivos(): Observable<EvaluadorRespuesta> {
+    return this.http.get<EvaluadorRespuesta>(this.url + 'Evaluador/seleccionarEvaluador_activo');
+  }
+
+  registrarEvaluador(
+    data: Evaluador
+  ): Observable<EvaluadorRespuesta> {
+    return this.http.post<EvaluadorRespuesta>(
+      this.url + "Evaluador/actualizarEvaluador",
+      data,
+      this.getOptions()
+    );
+  }
+
+  modificarEvaluador(
+    data: Evaluador
+  ): Observable<EvaluadorRespuesta> {
+    return this.http.put<EvaluadorRespuesta>(
+      this.url + `Evaluador/actualizarEvaluador/${data.id}`,
+      data,
+      this.getOptions()
+    );
+  }
+
 
 }

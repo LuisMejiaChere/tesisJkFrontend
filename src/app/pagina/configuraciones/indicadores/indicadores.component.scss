@@ -1,17 +1,4 @@
 
-  // .mat-column-descripcion{
-  //   word-wrap: break-word !important;
-  //   white-space: unset !important;
-  //   flex: 0 0 38% !important;
-  //   overflow-wrap: break-word;
-  //   word-wrap: break-word;
-  //   word-break: break-word;
-  //   -ms-hyphens: auto;
-  //   -moz-hyphens: auto;
-  //   -webkit-hyphens: auto;
-  //   hyphens: auto;
-  // }
-  
   .mat-column-num{
     word-wrap: break-word !important;
     white-space: unset !important;
@@ -25,19 +12,18 @@
     -webkit-hyphens: auto;
     hyphens: auto;
   }
-
-  // .mat-column-indicador {
-  //   word-wrap: break-word !important;
-  //   white-space: unset !important;
-  //   flex: 0 0 8% !important;
-  //   overflow-wrap: break-word;
-  //   word-wrap: break-word;
-  //   word-break: break-word;
-  //   -ms-hyphens: auto;
-  //   -moz-hyphens: auto;
-  //   -webkit-hyphens: auto;
-  //   hyphens: auto;
-  // }
+  .rounded{
+    flex: 0 0 auto; 
+    box-sizing: border-box; 
+    margin-right: 4px; 
+    width: 53px;
+  }
   
-  
-  
+  .roundedInactivo{
+    flex: 0 0 auto; 
+    box-sizing: border-box; 
+    margin-right: 4px; 
+    width: 62px;
+    background-color: #e3e3e375 !important;
+      color: black !important;
+  }

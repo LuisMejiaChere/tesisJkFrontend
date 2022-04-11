@@ -5,12 +5,12 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 
 export class MensajeService {
 
-    horizontalPosition: MatSnackBarHorizontalPosition = 'start';
-    verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+    horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+    verticalPosition: MatSnackBarVerticalPosition = 'top';
 
     constructor(private snackBar: MatSnackBar) {}
 
-    openSnackBar(message: string, action: string = '') {
+    openSnackBar(message: string, action: string = 'Ok') {
         this.snackBar.open(message, action, {
           duration: 5000,
           horizontalPosition: this.horizontalPosition,

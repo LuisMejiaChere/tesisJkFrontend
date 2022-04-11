@@ -50,8 +50,7 @@
 
 
 <!-- <ng-container *ngIf="isSubheading(item) && (item.rol[0] === dataUsuario.id_rol || item.rol[1] === dataUsuario.id_rol)"> -->
-  <ng-container *ngIf="isSubheading(item) ">
+  <ng-container *ngIf="isSubheading(item) && ((item.rol[0] === dataUsuario.id_rol) || (item.rol[1] === dataUsuario.id_rol)) ">
   <div class="subheading" >{{ item.label }}</div>
   <vex-sidenav-item *ngFor="let subItem of item.children" [item]="subItem" [level]="0"></vex-sidenav-item>
 </ng-container>
-

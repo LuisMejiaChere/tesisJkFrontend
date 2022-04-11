@@ -12,7 +12,7 @@ import icEdit from '@iconify/icons-ic/twotone-edit';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import { CriterioRepository } from 'src/app/repositorio/criterio/criterio.repository';
-import { CriteriosI } from 'src/app/interface/interfaces.interface';
+import icAdd from '@iconify/icons-ic/twotone-add';
 import { MensajeService } from 'src/app/servicios/mensajes/mensaje.service';
 
 @Component({
@@ -31,6 +31,7 @@ export class CriteriosComponent implements OnInit {
   icMoreVert = icMoreVert;
   icDelete = icDelete;
   icEdit = icEdit;
+  icAdd = icAdd;
   datosCargados = false;
   isDisabled = false;
   cargando = true;

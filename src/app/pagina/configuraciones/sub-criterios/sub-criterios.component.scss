@@ -13,3 +13,19 @@ table {
     background: #ffffffba;
     z-index: 1;
   }
+
+  .rounded{
+    flex: 0 0 auto; 
+    box-sizing: border-box; 
+    margin-right: 4px; 
+    width: 53px;
+  }
+  
+  .roundedInactivo{
+    flex: 0 0 auto; 
+    box-sizing: border-box; 
+    margin-right: 4px; 
+    width: 62px;
+    background-color: #e3e3e375 !important;
+      color: black !important;
+  }

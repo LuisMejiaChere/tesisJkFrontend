@@ -1,8 +1,8 @@
 <div class="dropdown">
 
 
-  <div class="dropdown-content">
-    <a 
+  <div mat-button class="dropdown-content">
+    <a (click)="closePopover()"
        *ngFor="let item of items; trackBy: trackById"
        [routerLink]="item.route"
        class="notification"

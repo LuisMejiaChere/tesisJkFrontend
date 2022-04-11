@@ -18,6 +18,7 @@ import { AdmininistradorGuard } from './guards/administrador.guard';
 import { DirectivasModule } from './directivas/directivas.module';
 import { LogeoGuard } from './guards/logeo.guard';
 import { NoLogeoGuard } from './guards/no-logeo.guard';
+import { SecondaryToolbarModule } from 'src/@vex/components/secondary-toolbar/secondary-toolbar.module';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { NoLogeoGuard } from './guards/no-logeo.guard';
     HttpClientModule,
     MaterialModule,
     ServicioModule,
-
+    SecondaryToolbarModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     IconModule,

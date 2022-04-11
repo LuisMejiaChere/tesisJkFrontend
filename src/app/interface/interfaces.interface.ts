@@ -4,6 +4,7 @@ import { PeriodoLectivo } from "../modelos/periodo-lectivo/periodo-lectivo.model
 import { Subcriterio } from "../modelos/subcriterio/subcriterio.models";
 import { Indicador } from "../modelos/indicador/indicador.models";
 import { ModeloCarrera } from "../modelos/modelo-carrera/modelo-carrera.models";
+import { Evaluador } from "../modelos/evaluador/evaluador.models";
 
 export interface UsuarioLoginRespuesta {
   ok?: boolean;
@@ -29,6 +30,12 @@ export interface SubcriterioRespuesta {
   estado?: boolean;
   observacion?: string;
   datos?: Subcriterio[] & Subcriterio;
+}
+
+export interface EvaluadorRespuesta {
+  estado?: boolean;
+  observacion?: string;
+  datos?: Evaluador[] & Evaluador;
 }
 
 export interface IndicadorRespuesta {

@@ -6,6 +6,8 @@ import { ConfiguracionesComponent } from './configuraciones/configuraciones.comp
 import { EvaluacionesComponent } from './evaluaciones/evaluaciones.component';
 import { AdmininistradorGuard } from '../guards/administrador.guard';
 import { E404Component } from './404/404.component';
+import { PersonalComponent } from './personal/personal.component';
+import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 
 
 const appRoutesPages: VexRoutes = [
@@ -24,12 +26,24 @@ const appRoutesPages: VexRoutes = [
                 component: EvaluacionesComponent,
                 loadChildren: () => import('src/app/pagina/evaluaciones/evaluaciones.module').then(m => m.EvaluacionesModule)
         },
+        {
+                path: 'personal',
+                component: PersonalComponent,
+                loadChildren: () => import('src/app/pagina/personal/personal.module').then(m => m.PersonalModule)
+        },
 
         {
                 path: '404',
                 component: E404Component,
                 // loadChildren: () => import('src/app/pagina/evaluaciones/evaluaciones.module').then(m => m.EvaluacionesModule)
         },
+        {
+                path: 'miperfil',
+                component: MiPerfilComponent,
+                // loadChildren: () => import('src/app/pagina/evaluaciones/evaluaciones.module').then(m => m.EvaluacionesModule)
+        },
+
+        
        
         { path: '**', redirectTo: 'tablero', pathMatch: 'full' },
 ]

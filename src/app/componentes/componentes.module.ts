@@ -14,6 +14,8 @@ import { DirectivasModule } from "../directivas/directivas.module";
 import { ArrastrarYSoltarDirective } from "../directivas/arrastrar-y-soltar-directive/arrastrar-y-soltar.directive";
 
 import {MatDialogModule} from '@angular/material/dialog';
+import { ModalActualizarEvaluadorComponent } from "./modal-actualizar-evaluador/modal-actualizar-evaluador.component";
+import { ModalActualizarMiPerfilComponent } from "./modal-actualizar-mi-perfil/modal-actualizar-mi-perfil.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     ModalActualizarModeloCarreraComponent,
     ModalActualizarEvidenciaComponent,
     ModalDialodErrorComponent,
-    
+    ModalActualizarEvaluadorComponent,
+    ModalActualizarMiPerfilComponent,
     ArrastrarYSoltarDirective
     
   ],
@@ -36,7 +39,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     ModalActualizarModeloCarreraComponent,
     ModalActualizarEvidenciaComponent,
     ModalDialodErrorComponent,
-    
+    ModalActualizarEvaluadorComponent,
+    ModalActualizarMiPerfilComponent,
     ArrastrarYSoltarDirective
     
   ],
@@ -45,7 +49,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     CommonModule,
     MaterialModule,
     FormsModule,
-    IconModule
+    IconModule,
+    // MatDialogModule
   ],
   exports: [
     ModalActualizarCriterioComponent,
@@ -55,7 +60,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     ModalActualizarModeloCarreraComponent,
     ModalActualizarEvidenciaComponent,
     ModalDialodErrorComponent,
-    
+    ModalActualizarEvaluadorComponent,
+    ModalActualizarMiPerfilComponent,
     ArrastrarYSoltarDirective
     
   ],

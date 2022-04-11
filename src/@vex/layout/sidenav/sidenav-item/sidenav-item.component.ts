@@ -6,7 +6,10 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter } from 'rxjs/operators';
 import { NavigationService } from '../../../services/navigation.service';
 import icKeyboardArrowRight from '@iconify/icons-ic/twotone-keyboard-arrow-right';
-
+import icLayers from '@iconify/icons-ic/twotone-layers';
+import icHowToReg from '@iconify/icons-ic/twotone-how-to-reg';
+import icFat from '@iconify/icons-ic/twotone-fact-check';
+import icSettings from '@iconify/icons-ic/twotone-settings';
 
 @UntilDestroy()
 @Component({
@@ -18,13 +21,65 @@ import icKeyboardArrowRight from '@iconify/icons-ic/twotone-keyboard-arrow-right
 })
 export class SidenavItemComponent implements OnInit, OnChanges {
 
+  menus = [
+    {
+      name: 'Principal',
+      icon: icLayers,
+      clase: 'principal',
+      path: 'principal',
+      active: false,
+    },
+    {
+      name: 'Clientes',
+      clase: 'clientes',
+      path: '/principal/clientes',
+      icon: 'groups',
+      active: false,
+    },
+    {
+      name: 'Carreras',
+      icon: 'local_taxi',
+      active: false,
+    },
+    {
+      name: 'Llamadas',
+      icon: 'support_agent',
+      clase: 'mantenimiento',
+      active: false,
+    },
+    {
+      name: 'Configuraciones',
+      clase: 'configuraciones',
+      icon: 'settings',
+      active: false,
+      submenu: [
+        { name: 'Monitores', clase :'partido_politico', path: '/principal/configuraciones/monitor' },
+        { name: 'Choferes', clase :'chofer', path: '/principal/configuraciones/chofer' },
+        { name: 'Socios', clase :'socio', path: '/principal/configuraciones/socio' },
+        { name: 'Unidades', clase :'socio', path: '/principal/configuraciones/unidad' },
+      ]
+    },
+   
+    {
+      name: 'Reportes',
+      icon: 'content_paste',
+      active: false,
+      submenu: [
+        { name: 'Varios', path: '/principal/reportes/varios' },
+      ]
+    },
+  ];
+
   @Input() item: NavigationItem;
   @Input() level: number;
   isOpen: boolean;
   isActive: boolean;
   icKeyboardArrowRight = icKeyboardArrowRight;
   dataUsuario:any;
-
+  icLayers = icLayers
+  icHowToReg = icHowToReg
+  icFat = icFat
+  icSettings = icSettings
   isLink = this.navigationService.isLink;
   isDropdown = this.navigationService.isDropdown;
   isSubheading = this.navigationService.isSubheading;
@@ -36,6 +91,12 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   @HostBinding('class')
   get levelClass() {
     return `item-level-${this.level}`;
+  }
+  toggle(index: number) {
+    this.menus.filter(
+      (menu, i) => i !== index && menu.active
+    ).forEach(menu => menu.active = !menu.active);
+    this.menus[index].active = !this.menus[index].active;
   }
 
   ngOnInit() {

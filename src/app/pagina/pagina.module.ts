@@ -21,10 +21,11 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { WidgetAssistantModule } from "../../@vex/components/widgets/widget-assistant/widget-assistant.module";
 import { SecondaryToolbarModule } from "../../@vex/components/secondary-toolbar/secondary-toolbar.module";
 import { IconModule } from "@visurel/iconify-angular";
+import { MiPerfilComponent } from "./mi-perfil/mi-perfil.component";
 
 
 @NgModule({
-  declarations: [DashboardComponent, PaginaComponent],
+  declarations: [DashboardComponent, PaginaComponent, MiPerfilComponent],
   imports: [
     CommonModule,
     LayoutModule,
@@ -46,6 +47,6 @@ import { IconModule } from "@visurel/iconify-angular";
     IconModule,
     VexModule,
   ],
-  exports: [DashboardComponent],
+  exports: [DashboardComponent,MiPerfilComponent],
 })
 export class PaginaModule {}

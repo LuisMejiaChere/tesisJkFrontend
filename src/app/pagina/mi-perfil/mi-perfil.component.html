@@ -1,0 +1,96 @@
+<vex-secondary-toolbar current="Principal">
+  <vex-breadcrumbs [crumbs]="['Mi perfil']" class="flex-auto"></vex-breadcrumbs>
+  <button mat-raised-button color="warn" fxFlex="none">
+          Beta
+        </button>
+</vex-secondary-toolbar>
+<div class="p-gutter" gdGap="0px" vexContainer>
+  <div class="mt-6 flex flex-col md:flex-row md:items-start">
+    <div class="flex-auto">
+      <div class="card">
+        <div class="px-gutter py-4 border-b">
+          <h2 class="title m-0">Mi información personal</h2>
+          <span fxFlex></span>
+          <button mat-raised-button color="primary" matTooltip="Editar mi información" fxFlex="none"
+          (click)="openDialog('Modificar',{})">
+          <mat-icon [icIcon]="icEdit" ></mat-icon>
+          Editar mi información
+        </button>
+        </div>
+  
+        <div class="px-gutter py-4" gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="16px">
+          <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+            <div class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon [icIcon]="icContactMail" size="24px"></mat-icon>
+            </div>
+            <div>
+              <p class="m-0 body-1">1314484378</p>
+              <p class="m-0 caption text-hint">Cédula de identidad</p>
+            </div>
+          </div>
+  
+          <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+            <div class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon [icIcon]="icWork" size="24px"></mat-icon>
+            </div>
+  
+            <div>
+              <p class="m-0 body-1">Evaluador</p>
+              <p class="m-0 caption text-hint">Rol asignado</p>
+            </div>
+          </div>
+  
+          <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                 class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon [icIcon]="icAccountBox" size="24px"></mat-icon>
+            </div>
+  
+            <div>
+              <p class="m-0 body-1">Jennifer Meza</p>
+              <p class="m-0 caption text-hint">Nombres y apellidos</p>
+            </div>
+          </div>
+          <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                 class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon [icIcon]="icMail" size="24px"></mat-icon>
+            </div>
+  
+            <div>
+              <p class="m-0 body-1">jennifer@gmail.com</p>
+              <p class="m-0 caption text-hint">Correo electrónico</p>
+            </div>
+          </div>
+
+          <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                 class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon [icIcon]="icPhone" size="24px"></mat-icon>
+            </div>
+  
+            <div>
+              <p class="m-0 body-1">0997680730</p>
+              <p class="m-0 caption text-hint">Teléfono celular</p>
+            </div>
+          </div>
+  
+          <div class="py-3" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                 class="w-10 h-10 rounded-full bg-primary-light text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+              <mat-icon [icIcon]="icAccessTime" size="24px"></mat-icon>
+            </div>
+  
+            <div>
+              <p class="m-0 body-1">Centro</p>
+              <p class="m-0 caption text-hint">Dirección domiciliaria</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

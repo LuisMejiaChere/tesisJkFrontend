@@ -1,19 +1,15 @@
-<form class="example-form" autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)">
+<form  autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)">
   <!-- <form  autocomplete="off" novalidate #form="ngForm" (ngSubmit)="enviarFormulario(form)"> -->
-  <h2 mat-dialog-title>{{accion}} modelo carrera
-    <button mat-icon-button mat-dialog-close (click)="cerrarModal()" *ngIf="accion !== 'Eliminar';"
-      style="float: right;">
-      <!-- <mat-icon aria-label="Cerrar modal">close</mat-icon> -->
-      <mat-icon aria-label="Cerrar modal" [icIcon]="icClose"></mat-icon>
-    </button>
-  </h2>
-  <!-- <div>{{getmostrar}}</div> -->
+  <h2 mat-dialog-title>{{accion}} modelo carrera</h2>
+  <div class="small">
+    <small>Los campos con <b>*</b> son obligatorios.</small>
+  </div>
   <mat-dialog-content class="mat-typography">
-  
     <div *ngIf="accion !== 'Eliminar';  else elseTemplate">  
+      <div class="px-6 py-4" fxLayout="column">
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Periodo Lectivo</mat-label>
-            <mat-select required name="id_periodo" #periodoid="ngModel" [(ngModel)]="dataModelo.periodoid">
+            <mat-select cdkFocusInitial required name="id_periodo" #periodoid="ngModel" [(ngModel)]="dataModelo.periodoid">
               <mat-option disabled *ngIf="periodoRepo?.obtenerPeriodosActivos?.length === 0"
                 value="{nombre:'noVale'}">
                 Seleccionar:
@@ -40,8 +36,8 @@
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Sub Criterio</mat-label>
             <mat-select required name="subcriterioid" #subcriterioid="ngModel"
-              [(ngModel)]="dataModelo.subcriterioid" [disabled]="subcriterioRepo?.obtenerSubcriterioId?.length === 0">
-              <mat-option disabled *ngIf="subcriterioRepo?.obtenerSubcriterioId?.length === 0"
+              [(ngModel)]="dataModelo.subcriterioid" [disabled]="subcriterioRepo?.obtenerSubcriterioId?.length === []">
+              <mat-option disabled *ngIf="subcriterioRepo?.obtenerSubcriterioId?.length === []"
                 value="{nombre:'noVale'}">
                 Seleccionar:
               </mat-option>
@@ -69,7 +65,7 @@
 
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Elemento fundamental</mat-label>
-            <textarea rows="6" cols="120" matInput cdkFocusInitial #input name="elementofundamental"
+            <textarea rows="6" matInput #input name="elementofundamental"
               type="text" [(ngModel)]="dataModelo.elementofundamental" #elementofundamental="ngModel" required
               placeholder="Descripción del elemento fundamental"></textarea>
           </mat-form-field>
@@ -77,9 +73,7 @@
           <mat-slide-toggle align="end" name="estado" [checked]="isChecked"
           (change)="dataModelo.estado = $event.checked">Estado
         </mat-slide-toggle>
-        
-  
-
+      </div>
     </div>
     <ng-template #elseTemplate>
       <div style="margin-bottom: 10px;">

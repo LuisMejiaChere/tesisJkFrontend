@@ -15,7 +15,7 @@ import icFolderZip from '@iconify/icons-ic/twotone-folder-zip';
 import faFilePdf from '@iconify/icons-fa-solid/file-pdf';
 import faFileXls from '@iconify/icons-fa-solid/file-excel'
 
-
+import icAdd from '@iconify/icons-ic/twotone-add';
 import icSearch from '@iconify/icons-ic/twotone-search';
 import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import icImportExport from '@iconify/icons-ic/twotone-import-export';
@@ -72,9 +72,10 @@ export class ModeloCarreraComponent implements OnInit {
 
   dialogRef: MatDialogRef<ModalActualizarModeloCarreraComponent, any>;
   dialogRefEvidencia: MatDialogRef<ModalActualizarEvidenciaComponent, any>;
-  columnsToDisplay : string[] =  ['num', 'elementoFundamental','estado', 'action'];
+  columnsToDisplay : string[] =  ['index', 'elementoFundamental','estado', 'action'];
   // mostrarColumnas: string[] = ['num', 'criterio', 'subcriterio', 'indicador', 'tipo', 'descripcion', 'elemento_fundamental', 'estado', 'action'];
   expandedElement: any | null;
+  icAdd = icAdd;
   dataSource = null;
   icSearch = icSearch;
   icImportExport = icImportExport;
@@ -118,6 +119,7 @@ export class ModeloCarreraComponent implements OnInit {
 
   openDialog(accion: string, data: ModeloCarrera) {
     this.dialogRef = this.dialog.open(ModalActualizarModeloCarreraComponent, {
+      width: "600px",
       data: { accion, data },
     });
 
