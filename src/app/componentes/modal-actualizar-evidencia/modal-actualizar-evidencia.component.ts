@@ -138,6 +138,8 @@ export class ModalActualizarEvidenciaComponent implements OnInit, OnDestroy{
   }
 
   addEvidencia(datos){
+    const nombres = JSON.parse(localStorage.getItem('usuario')).nombres + ' ' + JSON.parse(localStorage.getItem('usuario')).apellidopaterno + ' ' + JSON.parse(localStorage.getItem('usuario')).apellidopaterno
+    datos.evaluador = nombres;
     this.archivos.push(datos)
   }
 

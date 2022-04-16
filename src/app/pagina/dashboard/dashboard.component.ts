@@ -48,24 +48,24 @@ export class DashboardComponent implements OnInit {
   criterios:any;
   indicadores:any;
   
-  displayedColumns: string[] = ['estado_evidencias', 'modelo_carrera', 'evaluador','fecha_evidencia'];
+  displayedColumns: string[] = ['modelo_carrera', 'nombre_evidencia', 'evaluador','fecha_evidencia'];
   // dataSource = this.ELEMENT_DATA;
-  dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
+  dataSource
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('counter', { static: true }) counter: ElementRef;
-  @Input() pageSize = 6;
+  @Input() pageSize = 5;
 
   icMoreHoriz = icMoreHoriz;
   icCloudDownload = icCloudDownload;
   ngOnInit(): void {
     this.rol = JSON.parse(localStorage.getItem('usuario')).rolid;
+    this.obtenerDatas()
   }
 
   ngAfterViewInit(){
     this.obtenerDatas()
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+   
   
   }
 
@@ -77,6 +77,11 @@ export class DashboardComponent implements OnInit {
     await this.urlService.contarPeriodo().subscribe((data:any)=>{this.periodos = data.datos[0].total;})
     await this.urlService.contarCriterio().subscribe((data:any)=>{this.criterios = data.datos[0].total;})
     await this.urlService.contarIndicador().subscribe((data:any)=>{this.indicadores = data.datos[0].total;})
+     this.urlService.EvidenciasModeloCarrera().subscribe((data:any)=>{this.dataSource = new MatTableDataSource(data.datos)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
+    
   }
 
 }

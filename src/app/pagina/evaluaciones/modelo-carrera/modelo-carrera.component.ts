@@ -106,6 +106,7 @@ export class ModeloCarreraComponent implements OnInit {
   }
   ngOnInit(): void {
     this.obtenerData()
+    this.rol = JSON.parse(localStorage.getItem('usuario')).rolid;
   }
 
   obtenerData() {
@@ -248,7 +249,7 @@ export class ModeloCarreraComponent implements OnInit {
       title: 'Modelo genérico de evaluación del entorno de aprendizaje de carreras en ecuador',
       author: 'Facultad de Ciencias Informatcas',
   });
-  pdf.watermark( new Txt('marca de agua con color azul').color('blue').end );
+  // pdf.watermark( new Txt('marca de agua con color azul').color('blue').end );
 
   }
 
@@ -345,8 +346,6 @@ crearComprimido(id) {
       // window.open(url);
       window.saveAs(url);
     }
-    console.log(res);
-    
   })
   
 }

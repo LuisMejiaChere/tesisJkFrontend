@@ -293,6 +293,12 @@ export class UrlService {
     );
   }
 
+  EvidenciasModeloCarrera(): Observable<any> {
+    return this.http.get<any>(
+      this.url + `Evidencia/seleccionar_evidencias?id=0`,
+    );
+  }
+
  eliminarEvidenciaModeloCarrerabyId(
     data: any
   ): Observable<any> {

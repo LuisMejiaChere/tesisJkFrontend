@@ -27,8 +27,8 @@ export class UploadFilesService {
             xhr.onreadystatechange = () => {
             xhr.readyState === 4
               ? xhr.status === 200
-                ? (exito(JSON.parse(xhr.response)), console.log(JSON.parse(xhr.response), 'exito'))
-                : (fallo(xhr.response), console.log(JSON.parse(xhr.response), 'falllo'))
+                ? (exito(JSON.parse(xhr.response)))
+                : (fallo(xhr.response))
               : ' '
           }; 
         xhr.send(form_data)
