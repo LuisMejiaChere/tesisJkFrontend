@@ -17,6 +17,8 @@ export class ModalActualizarMiPerfilComponent {
   bloquearBoton = false;
   @Output() close = new EventEmitter<any>();
   icClose = icClose;
+  rol: any;
+  disabled
   constructor(
     // public error: ErrorService,
     public dialogRef: MatDialogRef<ModalActualizarMiPerfilComponent>, @Optional() @Inject(MAT_DIALOG_DATA) public obj) {
@@ -24,7 +26,11 @@ export class ModalActualizarMiPerfilComponent {
     
     this.accion = obj.accion;
     this.dataEvaluador = this.fabrica(obj.data);
+    // console.log(this.dataEvaluador);
+    
     this.dataEvaluador.estado === "1" ? this.isChecked:this.isChecked=false;
+    this.rol = JSON.parse(localStorage.getItem('usuario')).rolid;
+    this.rol === '1' ? this.disabled = false : this.disabled = true;
   }
   
   fabrica(data = {}) {
@@ -40,13 +46,13 @@ export class ModalActualizarMiPerfilComponent {
   }
 
   enviarFormulario(form: NgForm) {
-  
     this.formularioEnviado = true;
     if (form.valid) {
       this.bloquearBoton = true;
       const data = { ...this.dataEvaluador }
       data.estado = this.dataEvaluador.estado? "1":"0";
-      data.contraseña = this.dataEvaluador.cedula;
+      data.password = this.dataEvaluador.password;
+      // data.rolid = '2';
       this.close.emit({ accion: this.accion, data });
     }
     this.bloquearBoton = false;

@@ -8,8 +8,10 @@ export class Evaluador {
         public celular?: string,
         public correo?: string,
         public direccion?: string,
-        public contraseña?: string,
-        public estado?: string
+        public password?: string,
+        public estado?: string,
+        public rolid?:string,
+        
     ) { 
         this.estado = "0";
     }

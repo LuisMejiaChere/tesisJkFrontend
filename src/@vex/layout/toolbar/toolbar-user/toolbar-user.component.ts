@@ -19,6 +19,7 @@ export class ToolbarUserComponent implements OnInit {
 
   ngOnInit() {
     this.dataUsuario = JSON.parse(localStorage.getItem('usuario'));
+    
   }
 
   showPopover(originRef: HTMLElement) {

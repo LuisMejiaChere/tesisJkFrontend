@@ -40,16 +40,29 @@ export class ModalActualizarEvaluadorComponent {
   }
 
   enviarFormulario(form: NgForm) {
-  
+   if(this.accion === 'Modificar'){
     this.formularioEnviado = true;
     if (form.valid) {
       this.bloquearBoton = true;
       const data = { ...this.dataEvaluador }
       data.estado = this.dataEvaluador.estado? "1":"0";
-      data.contraseña = this.dataEvaluador.cedula;
+      // data.password = this.dataEvaluador.cedula;
+      data.rolid = '2';
       this.close.emit({ accion: this.accion, data });
     }
     this.bloquearBoton = false;
+   }else{
+    this.formularioEnviado = true;
+    if (form.valid) {
+      this.bloquearBoton = true;
+      const data = { ...this.dataEvaluador }
+      data.estado = this.dataEvaluador.estado? "1":"0";
+      data.password = this.dataEvaluador.cedula;
+      data.rolid = '2';
+      this.close.emit({ accion: this.accion, data });
+    }
+    this.bloquearBoton = false;
+   }
   }
 
 

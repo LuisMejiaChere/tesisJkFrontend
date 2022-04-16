@@ -21,25 +21,25 @@
 
         <div fxLayout="row" style="display: flex; justify-content: space-between;" class="example-full-width" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0">
           <mat-form-field style="width: 48%;" appearance="outline" fxFlex="auto">
-            <mat-label>Apellido Materno</mat-label>
-            <input matInput #input name="apellidomaterno" type="text" [(ngModel)]="dataEvaluador.apellidomaterno" #apellidomaterno="ngModel" required placeholder="Apellido materno">
+            <mat-label>Apellido Paterno</mat-label>
+            <input required matInput #input name="apellidopaterno" type="text" [(ngModel)]="dataEvaluador.apellidopaterno" #apellidopaterno="ngModel" required placeholder="Apellido paterno">
           </mat-form-field>
           <span fxFlex></span>
           <mat-form-field style="width: 48%;" appearance="outline" fxFlex="auto">
-            <mat-label>Apellido Paterno</mat-label>
-            <input matInput #input name="apellidopaterno" type="text" [(ngModel)]="dataEvaluador.apellidopaterno" #apellidopaterno="ngModel" required placeholder="Apellido paterno">
+            <mat-label>Apellido Materno</mat-label>
+            <input required matInput #input name="apellidomaterno" type="text" [(ngModel)]="dataEvaluador.apellidomaterno" #apellidomaterno="ngModel" required placeholder="Apellido materno">
           </mat-form-field>
         </div>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Teléfono celular</mat-label>
-        <input matInput #input name="celular" type="text" [(ngModel)]="dataEvaluador.celular" #celular="ngModel" placeholder="Teléfono celular">
+        <input required matInput #input name="celular" type="text" [(ngModel)]="dataEvaluador.celular" #celular="ngModel" placeholder="Teléfono celular">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Correo electrónico</mat-label>
-        <input matInput #input name="correo" type="email" [(ngModel)]="dataEvaluador.correo" #correo="ngModel" required
-          placeholder="Correo electronico">
+        <input matInput  name="correo" type="email" [(ngModel)]="dataEvaluador.correo" #correo="ngModel" required
+          placeholder="Correo electronico" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
@@ -52,11 +52,6 @@
         (change)="dataEvaluador.estado = $event.checked">Estado
         </mat-slide-toggle>       
 
-        <!-- <mat-form-field appearance="outline" class="example-full-width">
-          <mat-label>Disabled</mat-label>
-          <input disabled matInput>
-        </mat-form-field> -->
-
       </div>
     </div>
     <ng-template #elseTemplate> 
@@ -64,52 +59,7 @@
         ¿Deseas eliminar el registro <b>{{dataEvaluador.nombres}}</b>?. <br>Si lo haces ya no podrás recuperarlo.
       </div>
     </ng-template>
-    <!-- <div *ngIf="accion !== 'Eliminar';  else elseTemplate">
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Cedula de identidad</mat-label>
-        <input matInput cdkFocusInitial #input name="cedula" type="text" [(ngModel)]="dataEvaluador.cedula" #cedula="ngModel" required
-          placeholder="Cedula de identidad">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Nombres</mat-label>
-        <input matInput cdkFocusInitial #input name="nombres" type="text" [(ngModel)]="dataEvaluador.nombres" #nombres="ngModel" required
-          placeholder="Nombres">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Apellido Paterno</mat-label>
-        <input matInput cdkFocusInitial #input name="apellidopaterno" type="text" [(ngModel)]="dataEvaluador.apellidopaterno" #apellidopaterno="ngModel" required
-          placeholder="Apellido paterno">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Apellido Materno</mat-label>
-        <input matInput cdkFocusInitial #input name="apellidomaterno" type="text" [(ngModel)]="dataEvaluador.apellidomaterno" #apellidomaterno="ngModel" required
-          placeholder="Apellido materno">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Correo electronico</mat-label>
-        <input matInput cdkFocusInitial #input name="correo" type="email" [(ngModel)]="dataEvaluador.correo" #correo="ngModel" required
-          placeholder="Correo electronico">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Dirección domiciliaria</mat-label>
-        <textarea rows="3" cols="120" matInput cdkFocusInitial #input name="direccion" type="text"
-          [(ngModel)]="dataEvaluador.direccion" #direccion="ngModel"
-          placeholder="Dirección domiciliaria"></textarea>
-      </mat-form-field>
-      <mat-slide-toggle align="end" name="estado" [checked]="isChecked"
-      (change)="dataEvaluador.estado = $event.checked">Estado
-      </mat-slide-toggle>
-    </div>
-    <ng-template #elseTemplate> 
-      <div style="margin-bottom: 10px;">
-        ¿Deseas eliminar el registro <b>{{dataEvaluador.nombres}}</b>?. <br>Si lo haces ya no podrás recuperarlo.
-      </div>
-    </ng-template> -->
   </mat-dialog-content>
-  <!-- <div class="creado_modificado" *ngIf="accion === 'Modificar';">
-    <mat-label><b>Creado:</b> {{cargo.creado}}</mat-label><br>
-    <mat-label><b>Modificado:</b> {{cargo.modificado}}</mat-label>
-  </div> -->
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close (click)="cerrarModal()">Cancelar</button>
     <button mat-button color="accent" cdkFocusInitial type="submit"

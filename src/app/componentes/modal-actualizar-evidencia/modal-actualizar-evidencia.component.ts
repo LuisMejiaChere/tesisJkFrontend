@@ -147,15 +147,14 @@ export class ModalActualizarEvidenciaComponent implements OnInit, OnDestroy{
     let file_for_upload = this.selected_files[index];
     fd.append('documento[]', file_for_upload.file);
     fd.append('modeloid', this.dataModelo.id);
+    fd.append('evaluadorid', JSON.parse(localStorage.getItem('usuario')).rolid);
     fd.append('estado', '1');
     file_for_upload.is_upload_in_progress = true;
     file_for_upload.upload_result = null;
     this.file_upload_sub = this.uploadService.uploadFile(fd).then((value: any)=> {
      
       if(value.estado){
-       
-             setTimeout(()=>{
-             
+             setTimeout(()=>{             
           file_for_upload.upload_result=value.observacion;  
           if(file_for_upload.file.name.indexOf('error')>=0){
             file_for_upload.upload_result =  'error';

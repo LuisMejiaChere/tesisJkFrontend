@@ -3,12 +3,18 @@
     <small>Los campos con <b>*</b> son obligatorios.</small>
   </div> -->
   <mat-dialog-content class="mat-typography">
+     
     <div class="row g-0 justify-content-around mt-5">
       <div class="modhyobitto-file-uploader"  (onFileDropped)="selectFiles($event)">
         <mat-list role="list">
             <mat-chip-list >
                 <mat-chip *ngFor="let archivo of archivos" (removed)="clickQuitarArchivo(archivo?.id)">
-                    <a href="http://188.166.96.154/backend.tesis.jk/docs/{{archivo?.ruta}}" target="_blank">{{archivo?.ruta}}</a> 
+                    <div class="chip">
+                    <a style="font-size: 13px;" href="http://188.166.96.154/backend.tesis.jk/docs/{{archivo?.ruta}}" target="_blank">{{archivo?.ruta}}</a> 
+                    <p style="margin: 0 0 0px; font-size: 10px; height: 11px;">Evidencia subida por: {{archivo.evaluador}}</p>
+                    <p style="margin: 0 0 0px; font-size: 10px; height: 11px;">Fecha subida: {{archivo.fecha}}</p>
+                    </div>
+                    
                     <button matChipRemove style="margin-top: -5px;">
                         <mat-icon mat-list-icon [icIcon]="icDelete"  style="cursor:pointer;"></mat-icon>
                       </button>

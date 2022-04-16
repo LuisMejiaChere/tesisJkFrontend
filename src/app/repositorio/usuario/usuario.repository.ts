@@ -6,7 +6,8 @@ import { map } from 'rxjs/operators';
 import { Usuario } from 'src/app/modelos/usuario/usuario.models';
 import { UrlService } from 'src/app/servicios/url/url.service';
 import { MensajeService } from 'src/app/servicios/mensajes/mensaje.service';
-import { InicioSesionI, UsuarioLoginRespuesta, UsuarioLogoutRespuesta } from 'src/app/interface/interfaces.interface';
+import { EvaluadorRespuesta, InicioSesionI, UsuarioLoginRespuesta, UsuarioLogoutRespuesta } from 'src/app/interface/interfaces.interface';
+import { Evaluador } from 'src/app/modelos/evaluador/evaluador.models';
 
 
 @Injectable({
@@ -32,19 +33,18 @@ export class UsuarioRepository {
     }
 
     inicioDeSesion(data: InicioSesionI) {
-        return this.url.inicioDeSesion(data).pipe(            
-            map((data: UsuarioLoginRespuesta) => {
-                console.log(data);
+        return this.url.inicioDeSesion(data).pipe(     
+            map((data: UsuarioLoginRespuesta) => {              
                 if (data.ok) {
                     this.usuario = data.datos[0];
-                    this.guardarDatosLocalStoras();
+                    this.guardarDatosLocalStoras(this.usuario);
                 }
                 return { ok: data.ok, observacion: data.observacion };
             }));
     }
 
-    guardarDatosLocalStoras() {
-        localStorage.setItem('usuario', JSON.stringify(this.usuario));
+    guardarDatosLocalStoras(data) {
+        localStorage.setItem('usuario', JSON.stringify(data));
     }
 
     TraerDatosAutenticacion() {
@@ -80,9 +80,23 @@ export class UsuarioRepository {
 
     }
 
+    modificarPerfil(data: Evaluador) {
+        this.url.modificarPerfil(data).subscribe((data: EvaluadorRespuesta) => {   
+            if (data.estado) {
+                this.usuario = data.datos;
+                this.guardarDatosLocalStoras(this.usuario);
+            } else {
+                this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+            }
+        }, error => {
+            this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+        });
+
+    }
+
     TraerRol(){
         if (localStorage.getItem('usuario')) {
-          return this.usuario.rol = JSON.parse(localStorage.getItem('usuario')).id_rol
+          return this.usuario.rol = JSON.parse(localStorage.getItem('usuario')).rolid
         } else {
             this.limpiarApp();
         }

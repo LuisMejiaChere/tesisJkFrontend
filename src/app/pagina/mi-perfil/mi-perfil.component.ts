@@ -16,6 +16,9 @@ import { ModalActualizarMiPerfilComponent } from 'src/app/componentes/modal-actu
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MensajeService } from 'src/app/servicios/mensajes/mensaje.service';
 import { EvaluadorRepository } from 'src/app/repositorio/evaluador/evaluador.repository';
+import { UsuarioRepository } from 'src/app/repositorio/usuario/usuario.repository';
+import { UrlService } from 'src/app/servicios/url/url.service';
+import { EvaluadorRespuesta } from 'src/app/interface/interfaces.interface';
 
 
 
@@ -43,11 +46,14 @@ export class MiPerfilComponent implements OnInit {
 
   dialogSubmitSubscription: any;
   dialogRef: MatDialogRef<ModalActualizarMiPerfilComponent, any>;
-  constructor(public dialog: MatDialog,private snack: MensajeService, public evaluadorRepo:EvaluadorRepository) {
+  miPerfil: any;
+
+  constructor(private url: UrlService,public dialog: MatDialog,private snack: MensajeService, public usuarioRepo:UsuarioRepository) {
   
   }
   ngOnInit(): void {
-  
+    this.miPerfil = JSON.parse(localStorage.getItem('usuario'))
+   
   }
 
   openDialog(accion: string, data: Evaluador) {
@@ -72,26 +78,21 @@ export class MiPerfilComponent implements OnInit {
       });
   }
 
-  modificarMiPefil(data: Evaluador) {
-    this.evaluadorRepo.modificarEvaluador(data).subscribe(this.controlador, this.errores);
+  modificarMiPefil(dat: Evaluador) {
+      this.url.modificarPerfil(dat).subscribe((data: EvaluadorRespuesta) => {   
+          if (data.estado) {
+              this.miPerfil = data.datos;
+              this.snack.openSnackBar(data.observacion)
+              this.usuarioRepo.guardarDatosLocalStoras(this.miPerfil);
+              this.dialogRef.close();
+          } else {
+              this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+          }
+      }, error => {
+          this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+      });
   }
 
 
-  controlador = (data: any) => {
-   
-    if (data.ok) {
-      // this.table.renderRows();
-      this.evaluadorRepo.obtenerEvaluadorFecth()
-    }
-    this.snack.openSnackBar(data.mensaje);
-    this.dialogRef.close();
-    this.evaluadorRepo.obtenerEvaluadorFecth()
-    
-  }
-  
-  errores = (data: any) => {
-    this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
-    this.dialogRef.close();
-  }
 
 }

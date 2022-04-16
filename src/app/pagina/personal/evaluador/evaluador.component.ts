@@ -29,7 +29,7 @@ export class EvaluadorComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   dialogRef: MatDialogRef<ModalActualizarEvaluadorComponent, any>;
-  mostrarColumnas: string[] = ['num', 'nombres','correo', 'estado', 'action'];
+  mostrarColumnas: string[] = ['num', 'nombres','correo', 'celular', 'estado', 'action'];
   dataSource = null;
   icSearch = icSearch;
   icMoreVert = icMoreVert;

@@ -97,6 +97,12 @@ export class UrlService {
   }
 
   // Criterios
+  contarCriterio(): Observable<CriterioRespuesta> {
+    return this.http.get<CriterioRespuesta>(
+      this.url + "Criterio/contarCriterio"
+    );
+  }
+
   obtenerCriterio(): Observable<CriterioRespuesta> {
     return this.http.get<CriterioRespuesta>(
       this.url + "Criterio/seleccionarCriterio"
@@ -125,6 +131,8 @@ export class UrlService {
 
 
   // SubCriterios
+
+
   obtenerSubcriterio(): Observable<SubcriterioRespuesta> {
     return this.http.get<SubcriterioRespuesta>(
       this.url + "Subcriterio/seleccionarSubcriterio"
@@ -162,6 +170,12 @@ export class UrlService {
 
 
   // Indicadores
+  contarIndicador(): Observable<IndicadorRespuesta> {
+    return this.http.get<IndicadorRespuesta>(
+      this.url + "indicador/contarIndicador"
+    );
+  }
+
   obtenerIndicador(): Observable<IndicadorRespuesta> {
     return this.http.get<IndicadorRespuesta>(
       this.url + "indicador/seleccionarIndicador"
@@ -194,6 +208,11 @@ export class UrlService {
 
 
   // Periodos Lectivod
+  contarPeriodo(): Observable<PeriodoLectivoRespuesta> {
+    return this.http.get<PeriodoLectivoRespuesta>(
+      this.url + "Periodo/contarPeriodo"
+    );
+  }
   obtenerPeriodoLectivo(): Observable<PeriodoLectivoRespuesta> {
     return this.http.get<PeriodoLectivoRespuesta>(
       this.url + "Periodo/seleccionarPeriodo"
@@ -226,6 +245,12 @@ export class UrlService {
 
 
   // Modelo carrera
+
+  contarEvaluacion(): Observable<ModeloCarreraRespuesta> {
+    return this.http.get<ModeloCarreraRespuesta>(
+      this.url + "Modelo_carrera/contarEvaluacion");
+  }
+
   obtenerModeloCarrera(): Observable<ModeloCarreraRespuesta> {
     return this.http.get<ModeloCarreraRespuesta>(
       this.url + "Modelo_carrera/seleccionar_modelo_carreras"
@@ -291,19 +316,19 @@ export class UrlService {
   // Evaluadores
   obtenerEvaluadores(): Observable<EvaluadorRespuesta> {
     return this.http.get<EvaluadorRespuesta>(
-      this.url + "Evaluador/seleccionarEvaluador"
+      this.url + "Usuario/seleccionarUsuario?id=0"
     );
   }
 
   obtenerEvaluadoresActivos(): Observable<EvaluadorRespuesta> {
-    return this.http.get<EvaluadorRespuesta>(this.url + 'Evaluador/seleccionarEvaluador_activo');
+    return this.http.get<EvaluadorRespuesta>(this.url + 'Usuario/seleccionarEvaluador_activo');
   }
 
   registrarEvaluador(
     data: Evaluador
   ): Observable<EvaluadorRespuesta> {
     return this.http.post<EvaluadorRespuesta>(
-      this.url + "Evaluador/actualizarEvaluador",
+      this.url + "Usuario/actualizarUsuario",
       data,
       this.getOptions()
     );
@@ -313,11 +338,24 @@ export class UrlService {
     data: Evaluador
   ): Observable<EvaluadorRespuesta> {
     return this.http.put<EvaluadorRespuesta>(
-      this.url + `Evaluador/actualizarEvaluador/${data.id}`,
+      this.url + `Usuario/actualizarUsuario?id=${data.id}`,
       data,
-      this.getOptions()
+      // this.getOptions()
     );
   }
+
+  modificarPerfil(
+    data: Evaluador
+  ): Observable<EvaluadorRespuesta> {
+    return this.http.put<EvaluadorRespuesta>(
+      this.url + `Usuario/modificarPerfil?id=${data.id}`,
+      data,
+      // this.getOptions()
+    );
+  }
+
+
+  
 
 
 }

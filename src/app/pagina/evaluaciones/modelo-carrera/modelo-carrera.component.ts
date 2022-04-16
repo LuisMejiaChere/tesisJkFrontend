@@ -18,7 +18,12 @@ import faFileXls from '@iconify/icons-fa-solid/file-excel'
 import icAdd from '@iconify/icons-ic/twotone-add';
 import icSearch from '@iconify/icons-ic/twotone-search';
 import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
+import icArrowDropUp from '@iconify/icons-ic/twotone-arrow-drop-up';
+
+
 import icImportExport from '@iconify/icons-ic/twotone-import-export';
+
+
 
 
 
@@ -72,7 +77,7 @@ export class ModeloCarreraComponent implements OnInit {
 
   dialogRef: MatDialogRef<ModalActualizarModeloCarreraComponent, any>;
   dialogRefEvidencia: MatDialogRef<ModalActualizarEvidenciaComponent, any>;
-  columnsToDisplay : string[] =  ['index', 'elementoFundamental','estado', 'action'];
+  columnsToDisplay : string[] =  ['action2','index', 'elementoFundamental','estado', 'action'];
   // mostrarColumnas: string[] = ['num', 'criterio', 'subcriterio', 'indicador', 'tipo', 'descripcion', 'elemento_fundamental', 'estado', 'action'];
   expandedElement: any | null;
   icAdd = icAdd;
@@ -80,6 +85,7 @@ export class ModeloCarreraComponent implements OnInit {
   icSearch = icSearch;
   icImportExport = icImportExport;
   icArrowDropDown =icArrowDropDown;
+  icArrowDropUp = icArrowDropUp;
   faFilePdf = faFilePdf;
   faFileXls = faFileXls;
   icAttachFile = icAttachFile;
@@ -109,7 +115,7 @@ export class ModeloCarreraComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    this.rol = JSON.parse(localStorage.getItem('usuario')).id_rol;
+    this.rol = JSON.parse(localStorage.getItem('usuario')).rolid;
   }
 
   filtrar(event: Event) {

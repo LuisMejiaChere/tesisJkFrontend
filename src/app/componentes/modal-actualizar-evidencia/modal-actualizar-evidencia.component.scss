@@ -3,6 +3,17 @@
     // max-width: 0px;
     width: 100%;
   }
+mat-chip{
+  height: auto;
+}
+  .chip{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    /* margin-bottom: 38px; */
+   
+  }
   
   .example-full-width {
     width: 100%;
