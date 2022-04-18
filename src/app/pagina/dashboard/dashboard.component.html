@@ -56,14 +56,6 @@
     <div class="card overflow-auto w-full" fxLayout="column">
       <div class="border-b py-4 px-6" fxLayout="row" fxLayoutAlign="start center">
         <h2 class="m-0 title" fxFlex="auto">Evaluaciones recientes</h2>
-<!--     
-        <button mat-icon-button type="button">
-          <mat-icon [cdkCopyToClipboard]="dataSource" [icIcon]="icCloudDownload" class="text-secondary"></mat-icon>
-        </button>
-    
-        <button mat-icon-button type="button">
-          <mat-icon [icIcon]="icMoreHoriz" class="text-secondary"></mat-icon>
-        </button> -->
       </div>
   
       <table mat-table [dataSource]="dataSource" class="w-full overflow-auto" mat-table matSort>
@@ -72,7 +64,9 @@
         <!-- NOMBRE DE LA EVALUACION Column -->
         <ng-container matColumnDef="modelo_carrera">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> MODELO CARRERA </th>
-          <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+          <td mat-cell *matCellDef="let element" matTooltip="{{element.modelo}}"> 
+            {{(element.modelo.length > 40) ? ((element.modelo).slice(0, 40) + '...') : element.modelo}}
+          </td>
         </ng-container>
 
           <!-- NOMBRE DE LA evidencia Column -->

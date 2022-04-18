@@ -33,21 +33,37 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <!-- Position Column -->
       <ng-container matColumnDef="num">
-        <th mat-header-cell *matHeaderCellDef style="width: 10px;"> <b>#</b> </th>
+        <th mat-header-cell *matHeaderCellDef> <b>#</b> </th>
         <td mat-cell *matCellDef="let element; let i = index;"> {{dataSource.filteredData.indexOf(element) + 1}}</td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="indicador">
         <th mat-header-cell *matHeaderCellDef mat-sort-heade> <b>Indicador</b></th>
-        <td mat-cell *matCellDef="let element"> {{element.indicador}} </td>
+        <td mat-cell *matCellDef="let element" matTooltip="{{element.indicador}}"> 
+          <!-- {{element.indicador | slice:0:40}} -->
+          {{(element.indicador.length > 40) ? ((element.indicador).slice(0, 40) + '...') : element.indicador}}
+        </td>
       </ng-container>
 
+       <!-- Name Column -->
+       <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-heade> <b>Tipo</b></th>
+        <td mat-cell *matCellDef="let element"> 
+          <div *ngIf="element.tipoid==='1'" fxflex="none"> 
+            Cualitativo 
+          </div>
+          <div *ngIf="element.tipoid==='2'" fxflex="none"> 
+            Cuantitativo 
+          </div>
+        </td>
+      </ng-container>
     
       <ng-container matColumnDef="descripcion" style="width: 10px;">
         <th mat-header-cell *matHeaderCellDef mat-sort-heade> <b>Descripción</b></th>
-        <td mat-cell *matCellDef="let element">
-          {{(element.descripcion.length > 80) ? ((element.descripcion).slice(0, 70) + '...') : element.descripcion}}
+        <td mat-cell *matCellDef="let element" matTooltip="{{element.descripcion}}">
+          <!-- {{element.descripcion | slice:0:40}} -->
+          {{(element.descripcion.length > 40) ? ((element.descripcion).slice(0, 40) + '...') : element.descripcion}}
         </td>
       </ng-container>
 

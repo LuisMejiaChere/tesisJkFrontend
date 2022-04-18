@@ -25,7 +25,7 @@ export class IndicadoresComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   dialogRef: MatDialogRef<ModalActualizarIndicadorComponent, any>;
-  mostrarColumnas: string[] = ["num", "indicador", 'descripcion',"estado", "action"];
+  mostrarColumnas: string[] = ["num", "indicador", "tipo", 'descripcion',"estado", "action"];
   dataSource = null;
   icSearch = icSearch;
   icMoreVert = icMoreVert;
@@ -58,9 +58,7 @@ export class IndicadoresComponent implements OnInit {
       );
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    });
-    console.log(this.indicadorRepo.obtenerIndicadores);
-    
+    }); 
   }
 
   filtrar(event: Event) {

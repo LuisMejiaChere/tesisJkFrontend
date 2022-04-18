@@ -284,21 +284,20 @@ async excel(){
 
     // Add Data and Conditional Formatting
     this.extraerData(data).forEach(d => {
-      const row = worksheet.addRow(d);
-      const qty = row.getCell(5);
-      let color = 'FF99FF99';
-      if (+qty.value < 500) {
-        color = 'FF9999';
-      }
+      // const row = 
+      worksheet.addRow(d);
+      // const qty = row.getCell(5);
+      // let color = 'FF99FF99';
+      // if (+qty.value < 500) {
+      //   color = 'FF9999';
+      // }
     
-      qty.fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: color }
-      };
-    }
-    
-    );
+      // qty.fill = {
+      //   type: 'pattern',
+      //   pattern: 'solid',
+      //   fgColor: { argb: color }
+      // };
+    });
     worksheet.getColumn(1).width = 5;
     worksheet.getColumn(2).width = 40;
     worksheet.getColumn(3).width = 25;
@@ -307,6 +306,14 @@ async excel(){
     worksheet.getColumn(6).width = 15;
     worksheet.getColumn(7).width = 40;
     worksheet.getColumn(8).width = 40;
+    worksheet.getColumn(1).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    worksheet.getColumn(2).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    worksheet.getColumn(3).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    worksheet.getColumn(4).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    worksheet.getColumn(5).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    worksheet.getColumn(6).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    worksheet.getColumn(7).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    worksheet.getColumn(8).alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
     worksheet.addRow([]);
 
 
