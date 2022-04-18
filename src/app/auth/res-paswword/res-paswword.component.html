@@ -1,0 +1,27 @@
+<div class="bg-pattern w-full h-full" fxLayout="column" fxLayoutAlign="center center">
+    <div class="card overflow-hidden w-full max-w-xs">
+
+      <div class="text-center mt-4 m-4">
+        <button mat-icon-button style="display: contents; font-size: 25px;" (click)="retroceder()" [icIcon]="icBack" class="p-6" matPrefix>Regresar a inicio de sesión</button>
+        <h2 class="title m-0">Restablecer contraseña</h2>
+        <h4 class="body-2 text-secondary m-0">Ingrese su correo electrónico y cédula de identidad para la recuperación de la contraseña.</h4>
+      </div>
+  
+      <div [formGroup]="form" class="p-6 flex flex-col">
+        <mat-form-field>
+          <mat-label>Correo electrónico</mat-label>
+          <mat-icon [icIcon]="icMail" class="mr-2" matPrefix></mat-icon>
+          <input formControlName="correo" matInput required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Cédula de identidad</mat-label>
+            <mat-icon [icIcon]="icContactMail" class="mr-2" matPrefix></mat-icon>
+            <input formControlName="cedula" matInput required>
+          </mat-form-field>
+  
+        <button [disabled]="!form.valid" (click)="send(form)" class="mt-2" color="primary" mat-raised-button type="button">
+          Restablecer
+        </button>
+      </div>
+    </div>
+  </div>

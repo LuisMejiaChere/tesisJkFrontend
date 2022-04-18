@@ -20,6 +20,10 @@ export class UsuarioRepository {
         this.TraerDatosAutenticacion();
     }
 
+    vistaComponente(data: any) {
+        return { ok: data.ok, mensaje: data.observacion }
+    }
+
     usuario: Usuario;
 
     estaAutenticado(): boolean {
@@ -76,8 +80,20 @@ export class UsuarioRepository {
         }, error => {
             this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
         });
+    }
 
-
+    restablecerContrasena(data){
+        this.url.restablecerContrasena(data).subscribe((resp:any)=>{
+            if(resp.estado){
+                this.notificacion.openSnackBar(resp.observacion);
+                this.ruta.navigate(['/logeo']);
+               
+            }else {
+                this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+            }
+        }, error => {
+            this.notificacion.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
+        });
     }
 
     modificarPerfil(data: Evaluador) {

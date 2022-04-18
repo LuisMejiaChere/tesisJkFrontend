@@ -10,7 +10,8 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   @Input() customTemplate: TemplateRef<any>;
   icShoppingBasket = icShoppingBasket;
-
+   today = new Date();
+   year = this.today.getFullYear();
   constructor() {
   }
 

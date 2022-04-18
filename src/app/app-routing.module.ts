@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
+import { ResPaswwordComponent } from './auth/res-paswword/res-paswword.component';
 import { LogeoGuard } from './guards/logeo.guard';
 import { NoLogeoGuard } from './guards/no-logeo.guard';
 
@@ -11,6 +12,11 @@ const routes: Routes = [
     path: 'logeo', 
     canActivate: [NoLogeoGuard],
     component: LoginComponent
+  },
+  {
+    path: 'restablecer-contrasena', 
+    canActivate: [NoLogeoGuard],
+    component: ResPaswwordComponent
   },
   {
     path: 'principal',

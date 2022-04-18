@@ -97,6 +97,14 @@ export class UrlService {
   }
 
   // Criterios
+  restablecerContrasena(data): Observable<any> {
+    return this.http.put<any>(
+      this.url + "Usuario/reseteoPassword", data,
+      this.getOptions()
+    );
+  }
+
+  // Criterios
   contarCriterio(): Observable<CriterioRespuesta> {
     return this.http.get<CriterioRespuesta>(
       this.url + "Criterio/contarCriterio"

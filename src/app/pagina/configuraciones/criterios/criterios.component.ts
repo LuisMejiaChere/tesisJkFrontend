@@ -93,12 +93,12 @@ export class CriteriosComponent implements OnInit {
     this.criterioRepo.registrarCriterio(data).subscribe(this.controlador, this.errores);
   }
 
-  modificarCriterio(data: Criterio) {
+  modificarCriterio(data: Criterio) { 
     this.criterioRepo.modificarCriterio(data).subscribe(this.controlador, this.errores);
   }
 
 
-  controlador = (data: any) => {
+  controlador = (data: any) => { 
     if (data.ok) {
       this.table.renderRows();
     }
@@ -107,6 +107,7 @@ export class CriteriosComponent implements OnInit {
   }
   
   errores = (data: any) => {
+    this.snack.openSnackBar(data.mensaje);
     this.snack.openSnackBar('No se pudo realizar la petición. Intente nuevamente.');
     this.dialogRef.close();
   }

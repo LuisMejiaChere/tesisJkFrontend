@@ -19,12 +19,13 @@ import { DirectivasModule } from './directivas/directivas.module';
 import { LogeoGuard } from './guards/logeo.guard';
 import { NoLogeoGuard } from './guards/no-logeo.guard';
 import { SecondaryToolbarModule } from 'src/@vex/components/secondary-toolbar/secondary-toolbar.module';
+import { ResPaswwordComponent } from './auth/res-paswword/res-paswword.component';
 
 
 @NgModule({
   declarations: [
     AppComponent, 
-    LoginComponent,
+    LoginComponent, ResPaswwordComponent,
     // PaginaComponent
   ],
   imports: [
