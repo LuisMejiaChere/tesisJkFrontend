@@ -63,7 +63,6 @@ import { ModalActualizarMiPerfilComponent } from "./modal-actualizar-mi-perfil/m
     ModalActualizarEvaluadorComponent,
     ModalActualizarMiPerfilComponent,
     ArrastrarYSoltarDirective
-    
   ],
 })
 export class ComponenteModule {}

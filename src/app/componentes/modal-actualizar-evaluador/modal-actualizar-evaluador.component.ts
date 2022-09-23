@@ -19,7 +19,9 @@ export class ModalActualizarEvaluadorComponent {
   icClose = icClose;
   constructor(
     // public error: ErrorService,
-    public dialogRef: MatDialogRef<ModalActualizarEvaluadorComponent>, @Optional() @Inject(MAT_DIALOG_DATA) public obj) {
+    public dialogRef: MatDialogRef<ModalActualizarEvaluadorComponent>, 
+    @Optional() @Inject(MAT_DIALOG_DATA) public obj
+    ) {
     dialogRef.disableClose = true;
     
     this.accion = obj.accion;

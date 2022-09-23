@@ -176,7 +176,6 @@ export class ModeloCarreraComponent implements OnInit {
 
   eliminarModeloCarrera(data: ModeloCarrera) {
     this.cargando = true;
-    // this.criterioRepo.modificarCriterio(data).subscribe(this.controlador, this.errores);
   }
 
   registrarModeloCarrera(data: ModeloCarrera) {
